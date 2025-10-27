@@ -1,0 +1,23 @@
+/* @type postcss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --orange: #FF4400;
+  --green-700: #256F3C;
+  --green-dark: #204A2C;
+  --cream: #F9F6F1;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.font-museomoderno {
+  font-family: 'MuseoModerno', cursive;
+}
+
+details[open] summary i.fa-chevron-down {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
