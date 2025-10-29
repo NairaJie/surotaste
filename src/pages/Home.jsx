@@ -28,7 +28,7 @@ export default function Home() {
           <li><Link to="/" className="hover:text-[var(--orange)] transition">Home</Link></li>
           <li><Link to="" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
           <li><Link to="/about" className="hover:text-[var(--orange)] transition">About</Link></li>
-          <li><Link to="" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
+          <li><Link to="/mealplan" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
         </ul>
 
           <button className="bg-[var(--green-700)] text-white px-10 py-2.5 rounded-full font-semibold hover:bg-[#1f5a32] transition-all shadow-md hover:scale-[1.03]">
