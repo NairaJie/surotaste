@@ -59,16 +59,57 @@ const Culinary = () => {
     { name: "Tahu Tek", img: tahuTek },
   ];
 
-  const culinaryList = [
-    { name: "Penyetan Bu Kris", price: "Rp28.000", img: penyetanBukris },
-    { name: "Rawon Pak Jaya", price: "Rp10.000", img: rawonJaya },
-    { name: "Rawon Pak Pangat", price: "Rp25.000", img: rawonPangat },
-    { name: "Soto Ayam Cak Har", price: "Rp25.000", img: sotoCakHar },
-    { name: "Nasi Cuhima Bu Evi", price: "Rp10.000", img: nasiCuhima },
-    { name: "Soto Ayam Ambengan", price: "Rp28.000", img: sotoAmbengan },
-    { name: "Sego Sambel Mak Yeye", price: "Rp10.000", img: segoSambel },
-    { name: "Rawon Setan", price: "Rp50.000", img: rawonSetan },
-  ];
+ const culinaryList = [
+  { 
+    name: "Penyetan Bu Kris", 
+    restaurant: "Warung Bu Kris",
+    price: "Rp28.000", 
+    img: penyetanBukris 
+  },
+  { 
+    name: "Rawon Pak Jaya", 
+    restaurant: "Warung Pak Jaya",
+    price: "Rp10.000", 
+    img: rawonJaya 
+  },
+  { 
+    name: "Rawon Pak Pangat", 
+    restaurant: "Warung Pak Pangat",
+    price: "Rp25.000", 
+    img: rawonPangat 
+  },
+  { 
+    name: "Soto Ayam Cak Har",
+    restaurant: "Warung Cak Har",
+    price: "Rp25.000", 
+    img: sotoCakHar 
+  },
+  { 
+    name: "Nasi Cuhima Bu Evi",
+    restaurant: "Warung Bu Evi",
+    price: "Rp10.000", 
+    img: nasiCuhima 
+  },
+  { 
+    name: "Soto Ayam Ambengan",
+    restaurant: "Soto Ambengan",
+    price: "Rp28.000", 
+    img: sotoAmbengan 
+  },
+  { 
+    name: "Sego Sambel Mak Yeye",
+    restaurant: "Warung Mak Yeye",
+    price: "Rp10.000", 
+    img: segoSambel 
+  },
+  { 
+    name: "Rawon Setan",
+    restaurant: "Warung Bu Kris",
+    price: "Rp50.000", 
+    img: rawonSetan 
+  },
+];
+
 
   const restaurants = [
     { name: "Warung Bu Kris", loc: "Jl. Kayoon No.46B", rate: "4.4", img: warungBukris },
@@ -99,11 +140,11 @@ const Culinary = () => {
 
       {/* HERO */}
       <section className="relative text-center px-6 mt-32">
-        <img src={heroCulinary} alt="Kuliner Surabaya" className="w-full max-w-6xl h-[420px] object-cover filter brightness-65 rounded-3xl mx-auto" />
+        <img src={heroCulinary} alt="Kuliner Surabaya" className="w-full max-w-[1200px] h-[420px] object-cover brightness-[65%] rounded-[25px] mx-auto block"/>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
           <h1 className="text-[#FFD35B] font-[MuseoModerno] text-5xl font-extrabold mb-4">Kenali Rasa Suroboyo</h1>
           <p className="max-w-lg mb-6 font-medium">Unggah foto makananmu dan temukan apakah itu termasuk kuliner legendaris Surabaya.</p>
-          <button onClick={() => navigate("/unggahmakanan")} className="bg-[#FF4400] hover:bg-[#e03c00] text-white px-6 py-2 rounded-lg font-semibold transition-transform hover:-translate-y-1">
+          <button onClick={() => navigate("/unggahmakanan")} className="bg-[#FF4400] hover:bg-[#e03c00] text-white px-6 py-2 rounded-full font-semibold transition-transform hover:-translate-y-1">
             Unggah Foto Sekarang
           </button>
         </div>
@@ -124,92 +165,114 @@ const Culinary = () => {
         </div>
       </section>
 
-      {/* FIND MORE CULINARY */}
+      {/* FIND MORE CULINARY*/}
       <section className="bg-gray-50 py-16 px-12 text-center">
-        <h2 className="text-3xl font-bold mb-8 text-green-800">Find More Culinary</h2>
-        <div className="flex justify-center mb-10 flex-wrap gap-3">
-          <input type="text" placeholder="Search Food" className="border rounded-xl px-4 py-2 w-52" />
-          <select className="border rounded-xl px-3 py-2 w-44">
-            <option>Harga</option>
-            <option>10.000 - 30.000</option>
-            <option>30.000 - 70.000</option>
-            <option>70.000 - 100.000</option>
-          </select>
-          <select className="border rounded-md px-3 py-2 w-44">
-            <option>Category</option>
-            <option>Aneka Lontong</option>
-            <option>Aneka Nasi</option>
-            <option>Aneka Kuah</option>
-          </select>
-          <button className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition">Search</button>
-        </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <h2 className="text-3xl font-bold mb-8 text-green-800">Find More Culinary</h2>
 
-        {/* === Card disamain styling-nya dengan Home === */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-          {culinaryList.map((item, i) => (
-            <div key={i} onClick={() => navigate("/detail")} className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer">
-              <img src={item.img} alt={item.name} className="w-full h-56 object-cover" />
-              <div className="p-4 text-left">
-                <h3 className="text-[var(--green-700)] font-semibold">{item.name}</h3>
-                <p className="text-[var(--orange)] font-bold mt-1">{item.price}</p>
+          <div className="flex justify-center mb-10 flex-wrap gap-3">
+            <input type="text" placeholder="Search Food" className="border rounded-xl px-4 py-2 w-52" />
+            <select className="border rounded-xl px-3 py-2 w-44">
+              <option>Harga</option>
+              <option>10.000 - 30.000</option>
+              <option>30.000 - 70.000</option>
+              <option>70.000 - 100.000</option>
+            </select>
+            <select className="border rounded-md px-3 py-2 w-44">
+              <option>Category</option>
+              <option>Aneka Lontong</option>
+              <option>Aneka Nasi</option>
+              <option>Aneka Kuah</option>
+            </select>
+            <button className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition">Search</button>
+          </div>
+
+          {/* === Card disamain styling-nya dengan Home === */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+            {culinaryList.map((item, i) => (
+              <div
+                key={i}
+                onClick={() => navigate("/detail")}
+                className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
+              >
+                <img src={item.img} alt={item.name} className="w-full h-56 object-cover" />
+                <div className="p-4 text-left">
+                  <h3 className="text-[var(--green-700)] font-semibold">{item.name}</h3>
+                  <p className="text-[var(--green-700)] text-sm">{item.restaurant}</p>
+                  <p className="text-[var(--orange)] font-bold mt-1">{item.price}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <button className="mt-10 bg-white border-2 border-green-700 text-green-700 px-6 py-3 rounded-md hover:bg-green-700 hover:text-white transition">
-          Show More
-        </button>
+          <button className="mt-10 bg-white border-2 border-green-700 text-green-700 px-6 py-3 rounded-full hover:bg-green-700 hover:text-white transition">
+            Show More
+          </button>
+        </div>
       </section>
 
+
       {/* FIND MORE RESTAURANT */}
-      <section className="bg-white py-16 px-12 text-center">
-        <h2 className="text-3xl font-bold mb-8 text-green-800">Find More Restaurant</h2>
-        <div className="flex justify-center mb-10 flex-wrap gap-3">
-          <select className="border rounded-xl px-3 py-2 w-44">
-            <option>Lokasi</option>
-            <option>Surabaya Timur</option>
-            <option>Surabaya Barat</option>
-            <option>Surabaya Pusat</option>
-            <option>Surabaya Utara</option>
-            <option>Surabaya Selatan</option>
-          </select>
-          <select className="border rounded-md px-3 py-2 w-40">
-            <option>Open Hours</option>
-            <option>08.00 AM</option>
-            <option>12.00 AM</option>
-            <option>06.00 AM</option>
-          </select>
-          <select className="border rounded-md px-3 py-2 w-40">
-            <option>Rating</option>
-            <option>⭐ 3</option>
-            <option>⭐ 4</option>
-            <option>⭐ 4.5</option>
-            <option>⭐ 5</option>
-          </select>
-          <button className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition">Search</button>
-        </div>
+      <section className="py-20 px-12 lg:px-32 bg-white text-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          
+          <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
+            Find More Restaurant
+          </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-          {restaurants.map((r, i) => (
-            <div key={i} onClick={() => navigate("/restaurant")} className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer">
-              <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
-                ★ {r.rate}
-              </span>
-              <img src={r.img} alt={r.name} className="w-full h-56 object-cover" />
-              <div className="p-4 text-left">
-                <h3 className="text-[var(--green-700)] font-semibold">{r.name}</h3>
-                <p className="text-[var(--orange)] text-sm flex items-center gap-1 mt-1">
-                  <i className="fa-solid fa-location-dot"></i> {r.loc}
-                </p>
+          <div className="flex justify-center mb-10 flex-wrap gap-3">
+            <select className="border rounded-xl px-3 py-2 w-44">
+              <option>Lokasi</option>
+              <option>Surabaya Timur</option>
+              <option>Surabaya Barat</option>
+              <option>Surabaya Pusat</option>
+              <option>Surabaya Utara</option>
+              <option>Surabaya Selatan</option>
+            </select>
+            <select className="border rounded-md px-3 py-2 w-40">
+              <option>Open Hours</option>
+              <option>08.00 AM</option>
+              <option>12.00 AM</option>
+              <option>06.00 AM</option>
+            </select>
+            <select className="border rounded-md px-3 py-2 w-40">
+              <option>Rating</option>
+              <option>⭐ 3</option>
+              <option>⭐ 4</option>
+              <option>⭐ 4.5</option>
+              <option>⭐ 5</option>
+            </select>
+            <button className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 transition">Search</button>
+          </div>
+
+          {/* === CARD RESTO — styling disamain Featured Restaurant === */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+            {restaurants.map((r, i) => (
+              <div
+                key={i}
+                onClick={() => navigate("/restaurant")}
+                className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
+              >
+                <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
+                  ★ {r.rate}
+                </span>
+
+                <img src={r.img} alt={r.name} className="w-full h-56 object-cover" />
+
+                <div className="p-4 text-left">
+                  <h3 className="text-[var(--green-700)] font-semibold">{r.name}</h3>
+                  <p className="text-[var(--orange)] text-sm flex items-center gap-1 mt-1">
+                    <i className="fa-solid fa-location-dot"></i> {r.loc}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <button className="mt-10 bg-white border-2 border-green-700 text-green-700 px-6 py-3 rounded-md hover:bg-green-700 hover:text-white transition">
-          Show More
-        </button>
+           <button className="mt-10 bg-white border-2 border-green-700 text-green-700 px-6 py-3 rounded-full hover:bg-green-700 hover:text-white transition">
+            Show More
+          </button>
+        </div>
       </section>
 
       {/* FLOATING CHAT */}
