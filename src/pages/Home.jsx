@@ -26,7 +26,7 @@ export default function Home() {
 
          <ul className="hidden md:flex items-center space-x-8 font-semibold text-[var(--green-700)]">
           <li><Link to="/" className="hover:text-[var(--orange)] transition">Home</Link></li>
-          <li><Link to="" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
+          <li><Link to="/culinary" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
           <li><Link to="/about" className="hover:text-[var(--orange)] transition">About</Link></li>
           <li><Link to="/mealplan" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
         </ul>
@@ -38,34 +38,40 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <header className="relative flex flex-col-reverse lg:flex-row items-center justify-between px-12 lg:px-32 pt-32 pb-24 bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden">
-        {/* Text */}
-        <div className="max-w-xl space-y-6">
-          <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
-            <span className="text-[var(--orange)]">Jelajahi Rasa</span> <br />
-            <span className="text-[var(--green-700)]">Khas Surabaya</span>
-          </h1>
+      <header className="relative pt-32 pb-24 bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-12">
+          
+          {/* Text */}
+          <div className="flex flex-col gap-6 max-w-xl">
+            <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
+              <span className="text-[var(--orange)]">Jelajahi Rasa</span> <br />
+              <span className="text-[var(--green-700)]">Khas Surabaya</span>
+            </h1>
 
-          <p className="text-[#13412b] text-lg leading-relaxed">
-            Temukan kuliner legendaris dan hidden gems Surabaya — dari warung legendaris sampai tempat hits kekinian.
-          </p>
-          <div className="flex gap-4 mt-6">
-            <button className="bg-[var(--green-700)] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#1f5a32] hover:scale-105 transition-all shadow-lg">
-              Explore Now
-            </button>
+            <p className="text-[#13412b] text-lg leading-relaxed">
+              Temukan kuliner legendaris dan hidden gems Surabaya — dari warung legendaris sampai tempat hits kekinian.
+            </p>
+
+            <div className="flex gap-4 mt-2">
+              <button className="bg-[var(--green-700)] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#1f5a32] hover:scale-105 transition-all shadow-lg">
+                Explore Now
+              </button>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="relative w-full lg:w-[600px] flex justify-center mt-10 lg:mt-0">
+            <div className="absolute -top-10 right-0 bg-[var(--green-dark)] w-[420px] h-[420px] rounded-full blur-3xl opacity-30"></div>
+
+            <img
+              src={heroFood}
+              alt="Hero Food"
+              className="relative z-10 w-[480px] lg:w-[540px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
           </div>
         </div>
-
-        {/* Image */}
-        <div className="relative w-full lg:w-[600px] flex justify-center mt-10 lg:mt-0">
-          <div className="absolute -top-10 right-0 bg-[var(--green-dark)] w-[420px] h-[420px] rounded-full blur-3xl opacity-30"></div>
-          <img
-            src={heroFood}
-            alt="Hero Food"
-            className="relative z-10 w-[480px] lg:w-[540px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-          />
-        </div>
       </header>
+
 
       {/* STATISTIK */}
       <section className="py-20 text-center px-6 bg-[#FAF8F5]">
@@ -95,54 +101,56 @@ export default function Home() {
 
       {/* TASTE OF SURABAYA */}
       <section className="py-20 px-12 lg:px-32 bg-white">
-        <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
-          Taste of Surabaya
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {[{
-            img: rawon,
-            title: "Rawon Setan",
-            restaurant: "Warung Bu Kris",
-            price: "Rp50,000"
-          },
-          {
-            img: segoSambel,
-            title: "Sego Sambel",
-            restaurant: "Warung Mak Ijah",
-            price: "Rp10,000"
-          },
-          {
-            img: rujakCingur,
-            title: "Rujak Cingur",
-            restaurant: "Warung Bu Nah",
-            price: "Rp12,000"
-          },
-          {
-            img: sotoAyam,
-            title: "Soto Ayam",
-            restaurant: "Warung Ambetukam",
-            price: "Rp28,000"
-          }].map((food, i) => (
-            <div
-              key={i}
-              className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
-            >
-              <img src={food.img} alt={food.title} className="w-full h-56 object-cover" />
-              <div className="p-4">
-                <h2 className="text-[var(--green-700)] font-semibold">{food.title}</h2>
-                <p className="text-[var(--green-700)] text-sm">{food.restaurant}</p>
-                <p className="text-[var(--orange)] font-bold mt-1">{food.price}</p>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
+            Taste of Surabaya
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {[{
+              img: rawon,
+              title: "Rawon Setan",
+              restaurant: "Warung Bu Kris",
+              price: "Rp50,000"
+            },
+            {
+              img: segoSambel,
+              title: "Sego Sambel",
+              restaurant: "Warung Mak Ijah",
+              price: "Rp10,000"
+            },
+            {
+              img: rujakCingur,
+              title: "Rujak Cingur",
+              restaurant: "Warung Bu Nah",
+              price: "Rp12,000"
+            },
+            {
+              img: sotoAyam,
+              title: "Soto Ayam",
+              restaurant: "Warung Ambetukam",
+              price: "Rp28,000"
+            }].map((food, i) => (
+              <div
+                key={i}
+                className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+              >
+                <img src={food.img} alt={food.title} className="w-full h-56 object-cover" />
+                <div className="p-4">
+                  <h2 className="text-[var(--green-700)] font-semibold">{food.title}</h2>
+                  <p className="text-[var(--green-700)] text-sm">{food.restaurant}</p>
+                  <p className="text-[var(--orange)] font-bold mt-1">{food.price}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
 
       {/* CULINARY GUIDE */}
        
-      <section className="relative flex flex-wrap lg:flex-nowrap items-center justify-center gap-16 px-12 lg:px-32 py-20 bg-gradient-to-r from-[#163f2a] via-[#2e6b3e] to-[#eaf6ee] text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between w-full">
+      <section className="relative py-20 bg-gradient-to-r from-[#163f2a] via-[#2e6b3e] to-[#eaf6ee] text-white overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-wrap lg:flex-nowrap items-center justify-between gap-16 px-12">
           
           {/* Kiri */}
           <div className="z-10 max-w-xl lg:w-[45%] text-center lg:text-left space-y-4">
@@ -165,48 +173,52 @@ export default function Home() {
               alt="Mascotte"
               className="w-[420px] relative z-10 drop-shadow-2xl"
             />
-            <p className="absolute bottom-6 left-[51%] -translate-x-1/2 bg-[var(--green-700)] text-white font-museomoderno text-2xl font-bold px-5 py-2 rounded-full shadow-md z-20">
+            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[var(--green-700)] text-white font-museomoderno text-2xl font-bold px-5 py-2 rounded-full shadow-md z-20">
               Cak Suroyo
             </p>
           </div>
+
         </div>
       </section>
 
 
 
 
+
       {/* FEATURED RESTAURANT */}
       <section className="py-20 px-12 lg:px-32 bg-[#Fffff]">
-        <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
-          Featured Restaurant
-        </h2>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
+            Featured Restaurant
+          </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
-          {[
-            { img: warungBukris, title: "Warung Ibu Kris", loc: "Jl. Kayoon No.46B", rating: "4.9" },
-            { img: rawonPangat, title: "Rawon Pak Pangat", loc: "Jl. Keltintang Baru Sel.I No.15", rating: "4.8" },
-            { img: penyetanAli, title: "Penyetan Bang Ali", loc: "Jl. Simpang Darmo Permai", rating: "4.7" },
-            { img: lontongBalap, title: "Lontong Balap Rajawali", loc: "Jl. Kerembangan Timur", rating: "4.6" },
-            { img: sotoHar, title: "Soto Ayam Cak Har", loc: "Jl. Dr. Ir. H. Soekarno No.220", rating: "4.8" },
-            { img: nasiKuning, title: "Nasi Kuning Ambon", loc: "Jl. Raya Tenggilis Mejoyo", rating: "4.9" },
-          ].map((resto, index) => (
-            <div
-              key={index}
-              className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
-            >
-              
-              <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
-                ★ {resto.rating}
-              </span>
-              <img src={resto.img} alt={resto.title} className="w-full h-56 object-cover" />
-              <div className="p-4 text-left">
-                <h3 className="text-lg font-bold text-[var(--green-700)]">{resto.title}</h3>
-                <p className="text-sm text-[var(--orange)] mt-1 flex items-center gap-1">
-                  <i className="fa-solid fa-location-dot"></i> {resto.loc}
-                </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
+            {[
+              { img: warungBukris, title: "Warung Ibu Kris", loc: "Jl. Kayoon No.46B", rating: "4.9" },
+              { img: rawonPangat, title: "Rawon Pak Pangat", loc: "Jl. Keltintang Baru Sel.I No.15", rating: "4.8" },
+              { img: penyetanAli, title: "Penyetan Bang Ali", loc: "Jl. Simpang Darmo Permai", rating: "4.7" },
+              { img: lontongBalap, title: "Lontong Balap Rajawali", loc: "Jl. Kerembangan Timur", rating: "4.6" },
+              { img: sotoHar, title: "Soto Ayam Cak Har", loc: "Jl. Dr. Ir. H. Soekarno No.220", rating: "4.8" },
+              { img: nasiKuning, title: "Nasi Kuning Ambon", loc: "Jl. Raya Tenggilis Mejoyo", rating: "4.9" },
+            ].map((resto, index) => (
+              <div
+                key={index}
+                className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+              >
+                
+                <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
+                  ★ {resto.rating}
+                </span>
+                <img src={resto.img} alt={resto.title} className="w-full h-56 object-cover" />
+                <div className="p-4 text-left">
+                  <h3 className="text-lg font-bold text-[var(--green-700)]">{resto.title}</h3>
+                  <p className="text-sm text-[var(--orange)] mt-1 flex items-center gap-1">
+                    <i className="fa-solid fa-location-dot"></i> {resto.loc}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 

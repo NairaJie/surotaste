@@ -15,7 +15,7 @@ export default function About() {
 
           <ul className="hidden md:flex items-center space-x-8 font-semibold text-[var(--green-700)]">
             <li><Link to="/" className="hover:text-[var(--orange)] transition">Home</Link></li>
-            <li><Link to="" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
+            <li><Link to="/culinary" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
             <li><Link to="/about" className="hover:text-[var(--orange)] transition">About</Link></li>
             <li><Link to="/mealplan" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
           </ul>
