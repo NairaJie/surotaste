@@ -188,7 +188,7 @@ const Culinary = () => {
           </div>
 
           {/* === Card disamain styling-nya dengan Home === */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {culinaryList.map((item, i) => (
               <div
                 key={i}
