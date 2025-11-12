@@ -59,56 +59,56 @@ const Culinary = () => {
     { name: "Tahu Tek", img: tahuTek },
   ];
 
- const culinaryList = [
-  { 
-    name: "Penyetan Bu Kris", 
-    restaurant: "Warung Bu Kris",
-    price: "Rp28.000", 
-    img: penyetanBukris 
-  },
-  { 
-    name: "Rawon Pak Jaya", 
-    restaurant: "Warung Pak Jaya",
-    price: "Rp10.000", 
-    img: rawonJaya 
-  },
-  { 
-    name: "Rawon Pak Pangat", 
-    restaurant: "Warung Pak Pangat",
-    price: "Rp25.000", 
-    img: rawonPangat 
-  },
-  { 
-    name: "Soto Ayam Cak Har",
-    restaurant: "Warung Cak Har",
-    price: "Rp25.000", 
-    img: sotoCakHar 
-  },
-  { 
-    name: "Nasi Cuhima Bu Evi",
-    restaurant: "Warung Bu Evi",
-    price: "Rp10.000", 
-    img: nasiCuhima 
-  },
-  { 
-    name: "Soto Ayam Ambengan",
-    restaurant: "Soto Ambengan",
-    price: "Rp28.000", 
-    img: sotoAmbengan 
-  },
-  { 
-    name: "Sego Sambel Mak Yeye",
-    restaurant: "Warung Mak Yeye",
-    price: "Rp10.000", 
-    img: segoSambel 
-  },
-  { 
-    name: "Rawon Setan",
-    restaurant: "Warung Bu Kris",
-    price: "Rp50.000", 
-    img: rawonSetan 
-  },
-];
+  const culinaryList = [
+    {
+      name: "Penyetan Bu Kris",
+      restaurant: "Warung Bu Kris",
+      price: "Rp28.000",
+      img: penyetanBukris
+    },
+    {
+      name: "Rawon Pak Jaya",
+      restaurant: "Warung Pak Jaya",
+      price: "Rp10.000",
+      img: rawonJaya
+    },
+    {
+      name: "Rawon Pak Pangat",
+      restaurant: "Warung Pak Pangat",
+      price: "Rp25.000",
+      img: rawonPangat
+    },
+    {
+      name: "Soto Ayam Cak Har",
+      restaurant: "Warung Cak Har",
+      price: "Rp25.000",
+      img: sotoCakHar
+    },
+    {
+      name: "Nasi Cuhima Bu Evi",
+      restaurant: "Warung Bu Evi",
+      price: "Rp10.000",
+      img: nasiCuhima
+    },
+    {
+      name: "Soto Ayam Ambengan",
+      restaurant: "Soto Ambengan",
+      price: "Rp28.000",
+      img: sotoAmbengan
+    },
+    {
+      name: "Sego Sambel Mak Yeye",
+      restaurant: "Warung Mak Yeye",
+      price: "Rp10.000",
+      img: segoSambel
+    },
+    {
+      name: "Rawon Setan",
+      restaurant: "Warung Bu Kris",
+      price: "Rp50.000",
+      img: rawonSetan
+    },
+  ];
 
 
   const restaurants = [
@@ -140,7 +140,7 @@ const Culinary = () => {
 
       {/* HERO */}
       <section className="relative text-center px-6 mt-32">
-        <img src={heroCulinary} alt="Kuliner Surabaya" className="w-full max-w-[1200px] h-[420px] object-cover brightness-[65%] rounded-[25px] mx-auto block"/>
+        <img src={heroCulinary} alt="Kuliner Surabaya" className="w-full max-w-[1200px] h-[420px] object-cover brightness-[65%] rounded-[25px] mx-auto block" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
           <h1 className="text-[#FFD35B] font-[MuseoModerno] text-5xl font-extrabold mb-4">Kenali Rasa Suroboyo</h1>
           <p className="max-w-lg mb-6 font-medium">Unggah foto makananmu dan temukan apakah itu termasuk kuliner legendaris Surabaya.</p>
@@ -156,8 +156,20 @@ const Culinary = () => {
         <div className="overflow-x-auto scroll-x pb-4 px-4">
           <div className="flex space-x-8 w-max">
             {foods.map((food, i) => (
-              <div key={i} className="flex-shrink-0 text-center cursor-pointer" onClick={() => navigate(`/history/${food.name.toLowerCase().replace(/ /g, "-")}`)}>
-                <img src={food.img} className="w-28 h-28 object-cover rounded-full border-4 border-green-700 mx-auto mb-2" alt={food.name} />
+              <div
+                key={i}
+                className="flex-shrink-0 text-center cursor-pointer"
+                onClick={() =>
+                  navigate(`/detailfood/${food.name.toLowerCase().replace(/ /g, "-")}`, {
+                    state: food,
+                  })
+                }
+              >
+                <img
+                  src={food.img}
+                  alt={food.name}
+                  className="w-28 h-28 object-cover rounded-full border-4 border-green-700 mx-auto mb-2"
+                />
                 <p>{food.name}</p>
               </div>
             ))}
@@ -215,7 +227,7 @@ const Culinary = () => {
       {/* FIND MORE RESTAURANT */}
       <section className="py-20 px-12 lg:px-32 bg-white text-center">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          
+
           <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
             Find More Restaurant
           </h2>
@@ -269,7 +281,7 @@ const Culinary = () => {
             ))}
           </div>
 
-           <button className="mt-10 bg-white border-2 border-green-700 text-green-700 px-6 py-3 rounded-full hover:bg-green-700 hover:text-white transition">
+          <button className="mt-10 bg-white border-2 border-green-700 text-green-700 px-6 py-3 rounded-full hover:bg-green-700 hover:text-white transition">
             Show More
           </button>
         </div>
