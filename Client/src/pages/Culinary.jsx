@@ -144,7 +144,7 @@ const Culinary = () => {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
           <h1 className="text-[#FFD35B] font-[MuseoModerno] text-5xl font-extrabold mb-4">Kenali Rasa Suroboyo</h1>
           <p className="max-w-lg mb-6 font-medium">Unggah foto makananmu dan temukan apakah itu termasuk kuliner legendaris Surabaya.</p>
-          <button onClick={() => navigate("/unggahmakanan")} className="bg-[#FF4400] hover:bg-[#e03c00] text-white px-6 py-2 rounded-full font-semibold transition-transform hover:-translate-y-1">
+          <button onClick={() => navigate("/uploadphoto")} className="bg-[#FF4400] hover:bg-[#e03c00] text-white px-6 py-2 rounded-full font-semibold transition-transform hover:-translate-y-1">
             Unggah Foto Sekarang
           </button>
         </div>
@@ -160,7 +160,7 @@ const Culinary = () => {
                 key={i}
                 className="flex-shrink-0 text-center cursor-pointer"
                 onClick={() =>
-                  navigate(`/detailfood/${food.name.toLowerCase().replace(/ /g, "-")}`, {
+                  navigate(`/detailfood`, {
                     state: food,
                   })
                 }
@@ -262,7 +262,7 @@ const Culinary = () => {
             {restaurants.map((r, i) => (
               <div
                 key={i}
-                onClick={() => navigate("/restaurant")}
+                onClick={() => navigate("/detailrestaurant")}
                 className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
               >
                 <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">

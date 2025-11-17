@@ -1,21 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Mealplan from "./pages/Mealplan";
 import Culinary from "./pages/Culinary";
 import DetailFood from "./pages/DetailFood";
+import UploadPhoto from "./pages/UploadPhoto";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import DetailRestaurant from "./pages/DetailRestaurant";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/mealplan" element={<Mealplan />} />
-        <Route path="/culinary" element={<Culinary />} />
-        <Route path="/detailfood/:foodName" element={<DetailFood />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/mealplan" element={<Mealplan />} />
+      <Route path="/culinary" element={<Culinary />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/uploadphoto" element={<UploadPhoto />} />
+      <Route path="/detailfood" element={<DetailFood />} />
+      <Route path="/detailRestaurant" element={<DetailRestaurant />} />
+    </Routes>
   );
 }
 

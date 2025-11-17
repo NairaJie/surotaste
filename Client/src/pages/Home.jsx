@@ -24,23 +24,25 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-12 py-4">
           <img src={logo} alt="Logo" className="w-28 h-auto object-contain" />
 
-         <ul className="hidden md:flex items-center space-x-8 font-semibold text-[var(--green-700)]">
-          <li><Link to="/" className="hover:text-[var(--orange)] transition">Home</Link></li>
-          <li><Link to="/culinary" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
-          <li><Link to="/about" className="hover:text-[var(--orange)] transition">About</Link></li>
-          <li><Link to="/mealplan" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
-        </ul>
+          <ul className="hidden md:flex items-center space-x-8 font-semibold text-[var(--green-700)]">
+            <li><Link to="/" className="hover:text-[var(--orange)] transition">Home</Link></li>
+            <li><Link to="/culinary" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
+            <li><Link to="/about" className="hover:text-[var(--orange)] transition">About</Link></li>
+            <li><Link to="/mealplan" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
+          </ul>
 
-          <button className="bg-[var(--green-700)] text-white px-10 py-2.5 rounded-full font-semibold hover:bg-[#1f5a32] transition-all shadow-md hover:scale-[1.03]">
-            Sign In
-          </button>
+          <Link to="/SignIn">
+            <button className="bg-[var(--green-700)] text-white px-10 py-2.5 rounded-full font-semibold hover:bg-[#1f5a32] transition-all shadow-md hover:scale-[1.03]">
+              Sign In
+            </button>
+          </Link>
         </div>
       </nav>
 
       {/* HERO */}
       <header className="relative pt-32 pb-24 bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-12">
-          
+
           {/* Text */}
           <div className="flex flex-col gap-6 max-w-xl">
             <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
@@ -148,10 +150,10 @@ export default function Home() {
 
 
       {/* CULINARY GUIDE */}
-       
+
       <section className="relative py-20 bg-gradient-to-r from-[#163f2a] via-[#2e6b3e] to-[#eaf6ee] text-white overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-wrap lg:flex-nowrap items-center justify-between gap-16 px-12">
-          
+
           {/* Kiri */}
           <div className="z-10 max-w-xl lg:w-[45%] text-center lg:text-left space-y-4">
             <h2 className="text-[#FFfb8f] font-extrabold text-4xl mb-4 leading-tight">
@@ -205,7 +207,7 @@ export default function Home() {
                 key={index}
                 className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
               >
-                
+
                 <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
                   ★ {resto.rating}
                 </span>
