@@ -1,15 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import makananHero from "../assets/makanan-hero.png";
 import "../index.css";
 
-
 export default function UploadPhoto() {
-
-    const handleUploadClick = () => {
-        document.getElementById("uploadInput").click();
-    };
+    const navigate = useNavigate();
 
     return (
         <div className="antialiased text-gray-800 bg-white">
@@ -36,12 +32,12 @@ export default function UploadPhoto() {
 
                 {/* Tombol kembali */}
                 <div className="text-left mb-8">
-                    <Link
-                        to="/culinary"
+                    <button
+                        onClick={() => navigate(-1)}
                         className="text-green-700 text-2xl hover:text-green-900 transition"
                     >
                         <i className="fa-solid fa-arrow-left"></i>
-                    </Link>
+                    </button>
                 </div>
 
                 {/* Judul */}
@@ -55,10 +51,10 @@ export default function UploadPhoto() {
 
                 {/* Tombol Unggah */}
                 <button
-                    onClick={handleUploadClick}
+                    onClick={() => navigate("/resultupload")}
                     className="bg-[var(--orange)] text-white font-semibold py-3 px-9 rounded-xl
-                     shadow-lg transition-all duration-200 hover:bg-[#ff5b1f] 
-                     hover:-translate-y-0.5 mb-14"
+                    shadow-lg transition-all duration-200 hover:bg-[#ff5b1f] 
+                    hover:-translate-y-0.5 mb-14"
                 >
                     Unggah Gambar
                 </button>
@@ -79,7 +75,6 @@ export default function UploadPhoto() {
                     />
                 </div>
             </main>
-
 
             {/* FOOTER */}
             <footer className="text-gray-200 text-center py-10 bg-[var(--green-dark)] mt-10">

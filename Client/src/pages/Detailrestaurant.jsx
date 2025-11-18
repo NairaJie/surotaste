@@ -27,6 +27,7 @@ export default function DetailRestaurant() {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [selected, setSelected] = useState(null);
+    const [selectedHero, setSelectedHero] = useState(null);
 
     const menuItems = [
         { img: penyet, title: "Nasi Ayam Goreng", price: "Rp28,000" },
@@ -92,52 +93,76 @@ export default function DetailRestaurant() {
             <section className="px-12 lg:px-20 py-20 mt-10">
                 <div className="flex flex-col lg:flex-row gap-12 min-h-[500px]">
 
-                    {/* LEFT */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-between">
-                        <span className="bg-[var(--orange)] text-white px-3 py-1 rounded-lg w-fit font-semibold shadow">
+                    {/* LEFT SIDE */}
+                    <div className="w-full lg:w-1/2 flex flex-col justify-center">
+
+                        <span className="bg-[var(--orange)] text-white px-4 py-1 rounded-lg w-fit font-semibold shadow text-lg">
                             ★ 4.4
                         </span>
 
-                        <h1 className="text-5xl font-bold text-green-700 mt-4">Warung Bu Kris</h1>
+                        <h1 className="text-5xl font-bold text-green-700 mt-4 leading-tight">
+                            Warung Bu Kris
+                        </h1>
 
-                        <span className="bg-green-100 text-green-800 px-4 py-1.5 rounded-lg text-sm font-medium mt-4">
-                            08:00 - 19:00
-                        </span>
+                        <div className="inline-block">
+                            <span className="inline-flex w-auto bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-medium mt-4">
+                                08:00 - 19:00
+                            </span>
+                        </div>
 
-                        <p className="text-gray-600 mt-6 leading-relaxed">
-                            Kami menyajikan aneka lauk penyet khas Surabaya dengan kualitas terbaik...
+                        <p className="text-gray-600 mt-6 text-lg leading-relaxed max-w-xl">
+                            Kami menyajikan aneka lauk penyet khas Surabaya dengan kualitas terbaik.
+                            Mulai dari Ayam, Empal, Iga, hingga Paru Penyet...
                         </p>
 
-                        <p className="text-gray-600 mt-4">
-                            <i className="fa-solid fa-location-dot text-[var(--orange)] mr-2"></i>
-                            Jl. Kayoon No.46B, Surabaya, Jawa Timur
+                        <p className="text-gray-700 mt-6 bg-[#FAF8F5] p-4 rounded-xl text-sm flex items-start gap-2 w-fit">
+                            <i className="fa-solid fa-location-dot text-[var(--orange)] mt-1"></i>
+                            Jl. Kayoon No.46B, Embong Kaliasin, Surabaya, Jawa Timur 60271
                         </p>
 
+                        {/* Action Buttons */}
                         <div className="flex gap-3 mt-6 flex-wrap">
                             <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
                                 <i className="fa-regular fa-heart" /> Save
                             </button>
-                            <button className="px-4 py-2 border rounded-xl flex items-center gap-2 text-gray-600">
+                            <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
                                 <i className="fa-solid fa-share-nodes" /> Share
                             </button>
-                            <button className="px-4 py-2 border rounded-xl text-gray-600">
-                                <i className="fab fa-instagram"></i>
+                            <button className="px-4 py-2 border rounded-xl">
+                                <i className="fab fa-instagram" />
                             </button>
-                            <button className="px-4 py-2 border rounded-xl text-gray-600">
-                                <i className="fab fa-whatsapp"></i>
+                            <button className="px-4 py-2 border rounded-xl">
+                                <i className="fab fa-whatsapp" />
                             </button>
                         </div>
                     </div>
 
+
                     {/* RIGHT */}
-                    <div className="w-full lg:w-1/2">
-                        <div className="rounded-2xl shadow-xl overflow-hidden">
-                            <img src={bukrisHero} className="w-full h-[350px] object-cover" />
+                    <div className="w-full lg:w-1/2 flex flex-col items-center">
+
+                        {/* FOTO UTAMA */}
+                        <div className="w-[420px] h-[420px] rounded-2xl shadow-xl overflow-hidden">
+                            <img
+                                src={selectedHero ?? bukrisHero}
+                                className="w-full h-full object-cover"
+                            />
                         </div>
 
-                        <div className="grid grid-cols-4 gap-4 mt-4">
-                            {[area1, area2, area3, area4].map((img, i) => (
-                                <img key={i} src={img} className="h-24 rounded-xl object-cover" />
+                        {/* THUMBNAILS */}
+                        <div className="flex gap-4 mt-4">
+                            {[bukrisHero, area1, area2, area3, area4].map((img, i) => (
+                                <div
+                                    key={i}
+                                    onClick={() => setSelectedHero(img)}
+                                    className={`w-24 h-24 rounded-xl overflow-hidden cursor-pointer border-2 transition 
+                    ${selectedHero === img ? "border-green-700" : "border-transparent"}`}
+                                >
+                                    <img
+                                        src={img}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -169,7 +194,7 @@ export default function DetailRestaurant() {
             </section>
 
             {/* REVIEWS */}
-            <section className="px-12 py-12 bg-[#FBF8F5]">
+            <section className="px-12 py-12">
                 <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Our Review</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -214,39 +239,53 @@ export default function DetailRestaurant() {
                     onClick={() => setModalOpen(false)}
                 >
                     <div
-                        className="bg-white rounded-2xl p-8 w-[90%] max-w-2xl"
+                        className="bg-white rounded-2xl shadow-xl p-8 w-[92%] max-w-3xl relative"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             onClick={() => setModalOpen(false)}
-                            className="absolute top-4 right-6 text-2xl text-gray-600 hover:text-black"
+                            className="absolute top-4 right-6 text-3xl text-gray-500 hover:text-black"
                         >
                             <i className="fa-solid fa-xmark"></i>
                         </button>
 
-                        <div className="flex gap-6">
-                            <img
-                                src={selected.img}
-                                className="w-40 h-40 object-cover rounded-xl"
-                            />
+                        <div className="flex gap-8">
+                            {/* Image */}
+                            <div className="w-48 h-48 rounded-xl overflow-hidden">
+                                <img
+                                    src={selected.img}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
 
+                            {/* Detail */}
                             <div className="flex-1">
-                                <h3 className="text-2xl font-semibold text-green-700">
+                                <h3 className="text-3xl font-bold text-green-700">
                                     {selected.title}
                                 </h3>
 
-                                <p className="text-[var(--orange)] font-bold text-xl mt-2">
+                                <p className="text-[var(--orange)] font-bold text-xl mt-3">
                                     {selected.price}
                                 </p>
 
-                                <p className="text-gray-600 text-sm mt-4">
-                                    Deskripsi makanan bisa ditambahkan disini...
+                                <div className="mt-4 flex gap-3">
+                                    <span className="px-4 py-1 bg-green-100 text-green-700 rounded-xl text-sm">
+                                        Aneka Lontong
+                                    </span>
+                                    <span className="px-4 py-1 bg-orange-100 text-orange-700 rounded-xl text-sm">
+                                        Gurih
+                                    </span>
+                                </div>
+
+                                <p className="text-gray-600 mt-4 leading-relaxed">
+                                    Nasi ayam goreng khas bu kris dengan sambal bawang pedas...
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
+
 
             {/* FOOTER (JANGAN DIUBAH) */}
             <footer className="text-gray-200 text-center py-10 bg-[var(--green-dark)] mt-10">
