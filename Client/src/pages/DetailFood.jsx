@@ -89,7 +89,7 @@ export default function DetailFood() {
                         History
                     </h2>
                     <p className="text-gray-700 text-base leading-relaxed text-justify">
-                        {food.name}
+                        {food.history}
                     </p>
                 </div>
             </section>
@@ -97,7 +97,7 @@ export default function DetailFood() {
             {/* VARIASI RUJAK CINGUR */}
             <section className="px-12 py-12">
                 <h2 className="text-2xl font-bold text-center text-green-700 mb-8">
-                    Rujak Cingur
+                    {food.name}
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
