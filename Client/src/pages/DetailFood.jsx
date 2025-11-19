@@ -57,10 +57,10 @@ export default function DetailFood() {
 
                         <div className="flex gap-2 mb-5">
                             <span className="bg-green-100 text-green-800 px-4 py-1.5 rounded-lg text-sm font-medium">
-                                Breakfast
+                                {food.meals}
                             </span>
                             <span className="bg-orange-100 text-orange-400 px-4 py-1.5 rounded-lg text-sm font-medium">
-                                Aneka Lontong
+                                {food.category}
                             </span>
                         </div>
 
