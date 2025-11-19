@@ -1,10 +1,20 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../index.css";
 
 export default function DetailFood() {
-    const navigate = useNavigate();
+    const { name } = useParams(); // ambil nama dari URL
+    const navigate = useNavigate(); 
+    const [food, setFood] = useState(null);
+
+    useEffect(() => {
+        fetch (`http://localhost:5050/api/foods/name/${name}`)
+            .then(res => res.json())
+            .then(data => setFood(data))
+            .catch(err => console.log(err));
+    }, [name]);
+    if (!food) return <div className="p-10">Loading...</div>;
 
     return (
         <div className="antialiased text-gray-800 bg-white">
@@ -42,9 +52,8 @@ export default function DetailFood() {
 
                     {/* TEKS KIRI */}
                     <div>
-                        <h1 className="text-5xl font-bold text-green-700 mb-5">
-                            Rujak Cingur
-                        </h1>
+                        <h1 className="text-5xl font-bold text-green-700 mb-5">{food.name}</h1>
+
 
                         <div className="flex gap-2 mb-5">
                             <span className="bg-green-100 text-green-800 px-4 py-1.5 rounded-lg text-sm font-medium">
@@ -56,13 +65,7 @@ export default function DetailFood() {
                         </div>
 
                         <p className="text-gray-700 leading-relaxed text-lg">
-                            Rujak Cingur adalah hidangan khas Surabaya yang terkenal dengan
-                            perpaduan rasa manis, pedas, gurih, dan segar. Nama “cingur”
-                            berarti moncong sapi — bahan utama yang direbus hingga empuk,
-                            lalu disajikan bersama irisan buah-buahan segar seperti mangga
-                            muda, nanas, mentimun, serta sayuran rebus seperti kangkung dan
-                            taoge. Semua bahan ini disiram dengan bumbu petis udang kental
-                            yang kaya rasa, menciptakan cita rasa autentik Jawa Timur.
+                            {food.description}
                         </p>
                     </div>
 

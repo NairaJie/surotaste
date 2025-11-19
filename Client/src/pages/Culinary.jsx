@@ -159,11 +159,7 @@ const Culinary = () => {
               <div
                 key={i}
                 className="flex-shrink-0 text-center cursor-pointer"
-                onClick={() =>
-                  navigate(`/detailfood`, {
-                    state: food,
-                  })
-                }
+                onClick={() => navigate(`/detailfood/${encodeURIComponent(food.name)}`)}
               >
                 <img
                   src={food.img}

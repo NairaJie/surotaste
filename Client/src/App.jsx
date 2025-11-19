@@ -21,7 +21,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/uploadphoto" element={<UploadPhoto />} />
       <Route path="/resultupload" element={<ResultUpload/>} />
-      <Route path="/detailfood" element={<DetailFood />} />
+      <Route path="/detailfood/:name" element={<DetailFood />} />
       <Route path="/detailRestaurant" element={<DetailRestaurant />} />
     </Routes>
   );
