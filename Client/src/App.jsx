@@ -22,7 +22,7 @@ function App() {
       <Route path="/uploadphoto" element={<UploadPhoto />} />
       <Route path="/resultupload" element={<ResultUpload/>} />
       <Route path="/detailfood/:name" element={<DetailFood />} />
-      <Route path="/detailRestaurant" element={<DetailRestaurant />} />
+      <Route path="/detailrestaurant/:name" element={<DetailRestaurant />} />
     </Routes>
   );
 }

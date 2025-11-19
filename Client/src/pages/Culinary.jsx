@@ -1,5 +1,5 @@
 // src/pages/Culinary.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 // === IMAGES ===
@@ -33,7 +33,7 @@ import segoSambel from "../assets/foods/sego-sambel.png";
 import rawonSetan from "../assets/foods/rawon-setan.png";
 
 // === RESTAURANTS ===
-import warungBukris from "../assets/restaurants/warung-bukris.png";
+import nasiKrawuUrbanlicious from "../assets/restaurants/warung-bukris.png";
 import rujakCingurRest from "../assets/restaurants/rujak-cingur.jpg";
 import rawonPakPangat from "../assets/restaurants/rawon-pakpangat.jpg";
 import penyetanBangAli from "../assets/restaurants/penyetan-bangali.jpg";
@@ -42,6 +42,14 @@ import sotoAyamCakhar from "../assets/restaurants/soto-ayam-cakhar.jpg";
 
 const Culinary = () => {
   const navigate = useNavigate();
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5050/api/restaurants")
+      .then((res) => res.json())
+      .then((data) => setRestaurants(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const foods = [
     { name: "Rujak Cingur", img: rujakCingur },
@@ -110,15 +118,24 @@ const Culinary = () => {
     },
   ];
 
+  const dummyImages = [
+    nasiKrawuUrbanlicious,
+    rujakCingurRest,
+    rawonPakPangat,
+    penyetanBangAli,
+    lontongBalapRajawali,
+    sotoAyamCakhar,
+];
 
-  const restaurants = [
-    { name: "Warung Bu Kris", loc: "Jl. Kayoon No.46B", rate: "4.4", img: warungBukris },
-    { name: "Rujak Cingur", loc: "Jl. Genteng Durasim No.29", rate: "4.5", img: rujakCingurRest },
-    { name: "Rawon Pak Pangat", loc: "Jl. Kelintang Baru Sel. I No.15", rate: "4.5", img: rawonPakPangat },
-    { name: "Penyetan Bang Ali", loc: "Jl. Simpang Darmo Permai Utara No.22", rate: "4.3", img: penyetanBangAli },
-    { name: "Lontong Balap Rajawali", loc: "Jl. Krembangan Timur", rate: "4.4", img: lontongBalapRajawali },
-    { name: "Soto Cak Har", loc: "Jl. Dr. Ir. H. Soekarno No.220", rate: "4.5", img: sotoAyamCakhar },
-  ];
+
+  // const restaurants = [
+  //   { name: "Warung Bu Kris", loc: "Jl. Kayoon No.46B", rate: "4.4", img: warungBukris },
+  //   { name: "Rujak Cingur", loc: "Jl. Genteng Durasim No.29", rate: "4.5", img: rujakCingurRest },
+  //   { name: "Rawon Pak Pangat", loc: "Jl. Kelintang Baru Sel. I No.15", rate: "4.5", img: rawonPakPangat },
+  //   { name: "Penyetan Bang Ali", loc: "Jl. Simpang Darmo Permai Utara No.22", rate: "4.3", img: penyetanBangAli },
+  //   { name: "Lontong Balap Rajawali", loc: "Jl. Krembangan Timur", rate: "4.4", img: lontongBalapRajawali },
+  //   { name: "Soto Cak Har", loc: "Jl. Dr. Ir. H. Soekarno No.220", rate: "4.5", img: sotoAyamCakhar },
+  // ];
 
   return (
     <div className="font-[Poppins] bg-white text-gray-800">
@@ -258,14 +275,18 @@ const Culinary = () => {
             {restaurants.map((r, i) => (
               <div
                 key={i}
-                onClick={() => navigate("/detailrestaurant")}
+                onClick={() => navigate(`/detailrestaurant/${encodeURIComponent(r.name)}`)}
                 className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
               >
                 <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
                   ★ {r.rate}
                 </span>
 
-                <img src={r.img} alt={r.name} className="w-full h-56 object-cover" />
+                <img
+                  src={dummyImages[i % dummyImages.length]}
+                  alt={r.name}
+                  className="w-full h-56 object-cover"
+                /> 
 
                 <div className="p-4 text-left">
                   <h3 className="text-[var(--green-700)] font-semibold">{r.name}</h3>

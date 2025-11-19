@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 // IMAGE IMPORTS
@@ -23,9 +23,7 @@ import bok from "../assets/foods/nasibok.jpg";
 import userPic from "../assets/usercomment.jpg";
 
 export default function DetailRestaurant() {
-    const navigate = useNavigate();
-
-    const [modalOpen, setModalOpen] = useState(false);
+      const [modalOpen, setModalOpen] = useState(false);
     const [selected, setSelected] = useState(null);
     const [selectedHero, setSelectedHero] = useState(null);
 
@@ -60,6 +58,21 @@ export default function DetailRestaurant() {
                 "Mmm enak, ayamnya lembut banget. Porsinya besar dan datangnya cepat.",
         },
     ];
+    
+    const { name } = useParams();
+    const [restaurant, setRestaurant] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch(`http://localhost:5050/api/restaurants/name/${encodeURIComponent(name)}`)
+            .then(res => res.json())
+            .then(data => setRestaurant(data))
+            .catch(err => console.log(err));
+    }, [name]);
+
+    if (!restaurant) return <div className="p-10">Loading...</div>;
+
+  
 
     return (
         <div className="antialiased text-gray-800 bg-white">
@@ -97,27 +110,26 @@ export default function DetailRestaurant() {
                     <div className="w-full lg:w-1/2 flex flex-col justify-center">
 
                         <span className="bg-[var(--orange)] text-white px-4 py-1 rounded-lg w-fit font-semibold shadow text-lg">
-                            ★ 4.4
+                            ★ {restaurant.rating}
                         </span>
 
                         <h1 className="text-5xl font-bold text-green-700 mt-4 leading-tight">
-                            Warung Bu Kris
+                            {restaurant.name}
                         </h1>
 
                         <div className="inline-block">
                             <span className="inline-flex w-auto bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-medium mt-4">
-                                08:00 - 19:00
+                                {restaurant.openHours}
                             </span>
                         </div>
 
                         <p className="text-gray-600 mt-6 text-lg leading-relaxed max-w-xl">
-                            Kami menyajikan aneka lauk penyet khas Surabaya dengan kualitas terbaik.
-                            Mulai dari Ayam, Empal, Iga, hingga Paru Penyet...
+                            {restaurant.description}
                         </p>
 
                         <p className="text-gray-700 mt-6 bg-[#FAF8F5] p-4 rounded-xl text-sm flex items-start gap-2 w-fit">
                             <i className="fa-solid fa-location-dot text-[var(--orange)] mt-1"></i>
-                            Jl. Kayoon No.46B, Embong Kaliasin, Surabaya, Jawa Timur 60271
+                            {restaurant.location}
                         </p>
 
                         {/* Action Buttons */}
@@ -224,7 +236,7 @@ export default function DetailRestaurant() {
 
                 <div className="rounded-2xl overflow-hidden shadow-md h-[400px]">
                     <iframe
-                        src="https://www.google.com/maps?q=-7.2667279219695375,112.74756354111047&z=17&output=embed"
+                        src={restaurant.mapsLink}
                         className="w-full h-full border-0"
                         loading="lazy"
                         allowFullScreen
