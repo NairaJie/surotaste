@@ -89,11 +89,7 @@ export default function DetailFood() {
                         History
                     </h2>
                     <p className="text-gray-700 text-base leading-relaxed text-justify">
-                        Rujak cingur sudah ada sejak masa kolonial dan berkembang menjadi
-                        hidangan khas Surabaya. Dahulu hanya disajikan dalam acara adat,
-                        namun kini tersedia di berbagai warung hingga restoran modern.
-                        Keunikan bumbu petis udang yang kuat menjadi ciri utama dan diwariskan
-                        turun-temurun sebagai salah satu kekayaan kuliner Nusantara.
+                        {food.name}
                     </p>
                 </div>
             </section>
