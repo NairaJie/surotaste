@@ -23,7 +23,7 @@ import bok from "../assets/foods/nasibok.jpg";
 import userPic from "../assets/usercomment.jpg";
 
 export default function DetailRestaurant() {
-      const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const [selected, setSelected] = useState(null);
     const [selectedHero, setSelectedHero] = useState(null);
 
@@ -58,7 +58,7 @@ export default function DetailRestaurant() {
                 "Mmm enak, ayamnya lembut banget. Porsinya besar dan datangnya cepat.",
         },
     ];
-    
+
     const { name } = useParams();
     const [restaurant, setRestaurant] = useState(null);
     const navigate = useNavigate();
@@ -72,7 +72,7 @@ export default function DetailRestaurant() {
 
     if (!restaurant) return <div className="p-10">Loading...</div>;
 
-  
+
 
     return (
         <div className="antialiased text-gray-800 bg-white">
@@ -103,201 +103,205 @@ export default function DetailRestaurant() {
 
             {/* === CONTENT START === */}
 
-            <section className="px-12 lg:px-20 py-20 mt-10">
-                <div className="flex flex-col lg:flex-row gap-12 min-h-[500px]">
+            <div className="max-w-7xl mx-auto px-12">
 
-                    {/* LEFT SIDE */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-center">
 
-                        <span className="bg-[var(--orange)] text-white px-4 py-1 rounded-lg w-fit font-semibold shadow text-lg">
-                            ★ {restaurant.rating}
-                        </span>
+                <section className="px-12 lg:px-20 py-20 mt-10">
+                    <div className="flex flex-col lg:flex-row gap-12 min-h-[500px]">
 
-                        <h1 className="text-5xl font-bold text-green-700 mt-4 leading-tight">
-                            {restaurant.name}
-                        </h1>
+                        {/* LEFT SIDE */}
+                        <div className="w-full lg:w-1/2 flex flex-col justify-center">
 
-                        <div className="inline-block">
-                            <span className="inline-flex w-auto bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-medium mt-4">
-                                {restaurant.openHours}
+                            <span className="bg-[var(--orange)] text-white px-4 py-1 rounded-lg w-fit font-semibold shadow text-lg">
+                                ★ {restaurant.rating}
                             </span>
-                        </div>
 
-                        <p className="text-gray-600 mt-6 text-lg leading-relaxed max-w-xl">
-                            {restaurant.description}
-                        </p>
+                            <h1 className="text-5xl font-bold text-green-700 mt-4 leading-tight">
+                                {restaurant.name}
+                            </h1>
 
-                        <p className="text-gray-700 mt-6 bg-[#FAF8F5] p-4 rounded-xl text-sm flex items-start gap-2 w-fit">
-                            <i className="fa-solid fa-location-dot text-[var(--orange)] mt-1"></i>
-                            {restaurant.location}
-                        </p>
-
-                        {/* Action Buttons */}
-                        <div className="flex gap-3 mt-6 flex-wrap">
-                            <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
-                                <i className="fa-regular fa-heart" /> Save
-                            </button>
-                            <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
-                                <i className="fa-solid fa-share-nodes" /> Share
-                            </button>
-                            <button className="px-4 py-2 border rounded-xl">
-                                <i className="fab fa-instagram" />
-                            </button>
-                            <button className="px-4 py-2 border rounded-xl">
-                                <i className="fab fa-whatsapp" />
-                            </button>
-                        </div>
-                    </div>
-
-
-                    {/* RIGHT */}
-                    <div className="w-full lg:w-1/2 flex flex-col items-center">
-
-                        {/* FOTO UTAMA */}
-                        <div className="w-[420px] h-[420px] rounded-2xl shadow-xl overflow-hidden">
-                            <img
-                                src={selectedHero ?? bukrisHero}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-
-                        {/* THUMBNAILS */}
-                        <div className="flex gap-4 mt-4">
-                            {[bukrisHero, area1, area2, area3, area4].map((img, i) => (
-                                <div
-                                    key={i}
-                                    onClick={() => setSelectedHero(img)}
-                                    className={`w-24 h-24 rounded-xl overflow-hidden cursor-pointer border-2 transition 
-                    ${selectedHero === img ? "border-green-700" : "border-transparent"}`}
-                                >
-                                    <img
-                                        src={img}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* OUR MENU */}
-            <section className="px-12 py-12">
-                <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Our Menu</h2>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                    {menuItems.map((item) => (
-                        <div
-                            key={item.title}
-                            className="bg-[#FBF8F5] rounded-xl shadow-md hover:-translate-y-1 transition cursor-pointer"
-                            onClick={() => {
-                                setSelected(item);
-                                setModalOpen(true);
-                            }}
-                        >
-                            <img src={item.img} className="w-full h-48 object-cover" />
-                            <div className="p-4">
-                                <h3 className="text-green-700 font-semibold">{item.title}</h3>
-                                <p className="text-[var(--orange)] font-bold">{item.price}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* REVIEWS */}
-            <section className="px-12 py-12">
-                <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Our Review</h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {reviews.map((rev, i) => (
-                        <div key={i} className="bg-white p-6 rounded-2xl shadow-md">
-                            <div className="flex items-center mb-4">
-                                <img src={userPic} className="w-12 h-12 rounded-full mr-3" />
-                                <div>
-                                    <h4 className="font-semibold">{rev.name}</h4>
-                                    <div className="text-yellow-500 text-sm">
-                                        {"★".repeat(rev.stars)}{"☆".repeat(5 - rev.stars)}
-                                    </div>
-                                </div>
+                            <div className="inline-block">
+                                <span className="inline-flex w-auto bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-medium mt-4">
+                                    {restaurant.openHours}
+                                </span>
                             </div>
 
-                            <i className="fa-solid fa-quote-left text-2xl text-[var(--orange)] mb-2"></i>
+                            <p className="text-gray-600 mt-6 text-lg leading-relaxed max-w-xl">
+                                {restaurant.description}
+                            </p>
 
-                            <p className="text-gray-600 text-sm">{rev.comment}</p>
+                            <p className="text-gray-700 mt-6 bg-[#FAF8F5] p-4 rounded-xl text-sm flex items-start gap-2 w-fit">
+                                <i className="fa-solid fa-location-dot text-[var(--orange)] mt-1"></i>
+                                {restaurant.location}
+                            </p>
+
+                            {/* Action Buttons */}
+                            <div className="flex gap-3 mt-6 flex-wrap">
+                                <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
+                                    <i className="fa-regular fa-heart" /> Save
+                                </button>
+                                <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
+                                    <i className="fa-solid fa-share-nodes" /> Share
+                                </button>
+                                <button className="px-4 py-2 border rounded-xl">
+                                    <i className="fab fa-instagram" />
+                                </button>
+                                <button className="px-4 py-2 border rounded-xl">
+                                    <i className="fab fa-whatsapp" />
+                                </button>
+                            </div>
                         </div>
-                    ))}
-                </div>
-            </section>
 
-            {/* LOCATION */}
-            <section className="px-12 py-12">
-                <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Location</h2>
 
-                <div className="rounded-2xl overflow-hidden shadow-md h-[400px]">
-                    <iframe
-                        src={restaurant.mapsLink}
-                        className="w-full h-full border-0"
-                        loading="lazy"
-                        allowFullScreen
-                    />
-                </div>
-            </section>
+                        {/* RIGHT */}
+                        <div className="w-full lg:w-1/2 flex flex-col items-center">
 
-            {/* MODAL */}
-            {modalOpen && selected && (
-                <div
-                    className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-                    onClick={() => setModalOpen(false)}
-                >
-                    <div
-                        className="bg-white rounded-2xl shadow-xl p-8 w-[92%] max-w-3xl relative"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            onClick={() => setModalOpen(false)}
-                            className="absolute top-4 right-6 text-3xl text-gray-500 hover:text-black"
-                        >
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
-
-                        <div className="flex gap-8">
-                            {/* Image */}
-                            <div className="w-48 h-48 rounded-xl overflow-hidden">
+                            {/* FOTO UTAMA */}
+                            <div className="w-[420px] h-[420px] rounded-2xl shadow-xl overflow-hidden">
                                 <img
-                                    src={selected.img}
+                                    src={selectedHero ?? bukrisHero}
                                     className="w-full h-full object-cover"
                                 />
                             </div>
 
-                            {/* Detail */}
-                            <div className="flex-1">
-                                <h3 className="text-3xl font-bold text-green-700">
-                                    {selected.title}
-                                </h3>
-
-                                <p className="text-[var(--orange)] font-bold text-xl mt-3">
-                                    {selected.price}
-                                </p>
-
-                                <div className="mt-4 flex gap-3">
-                                    <span className="px-4 py-1 bg-green-100 text-green-700 rounded-xl text-sm">
-                                        Aneka Lontong
-                                    </span>
-                                    <span className="px-4 py-1 bg-orange-100 text-orange-700 rounded-xl text-sm">
-                                        Gurih
-                                    </span>
-                                </div>
-
-                                <p className="text-gray-600 mt-4 leading-relaxed">
-                                    Nasi ayam goreng khas bu kris dengan sambal bawang pedas...
-                                </p>
+                            {/* THUMBNAILS */}
+                            <div className="flex gap-4 mt-4">
+                                {[bukrisHero, area1, area2, area3, area4].map((img, i) => (
+                                    <div
+                                        key={i}
+                                        onClick={() => setSelectedHero(img)}
+                                        className={`w-24 h-24 rounded-xl overflow-hidden cursor-pointer border-2 transition 
+                    ${selectedHero === img ? "border-green-700" : "border-transparent"}`}
+                                    >
+                                        <img
+                                            src={img}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                </section>
 
+                {/* OUR MENU */}
+                <section className="px-12 py-12">
+                    <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Our Menu</h2>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                        {menuItems.map((item) => (
+                            <div
+                                key={item.title}
+                                className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+                                onClick={() => {
+                                    setSelected(item);
+                                    setModalOpen(true);
+                                }}
+                            >
+                                <img src={item.img} className="w-full h-48 object-cover" />
+                                <div className="p-4">
+                                    <h3 className="text-green-700 font-semibold">{item.title}</h3>
+                                    <p className="text-[var(--orange)] font-bold">{item.price}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* REVIEWS */}
+                <section className="px-12 py-12">
+                    <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Our Review</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {reviews.map((rev, i) => (
+                            <div key={i} className="bg-white p-6 rounded-2xl shadow-md">
+                                <div className="flex items-center mb-4">
+                                    <img src={userPic} className="w-12 h-12 rounded-full mr-3" />
+                                    <div>
+                                        <h4 className="font-semibold">{rev.name}</h4>
+                                        <div className="text-yellow-500 text-sm">
+                                            {"★".repeat(rev.stars)}{"☆".repeat(5 - rev.stars)}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <i className="fa-solid fa-quote-left text-2xl text-[var(--orange)] mb-2"></i>
+
+                                <p className="text-gray-600 text-sm">{rev.comment}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* LOCATION */}
+                <section className="px-12 py-12">
+                    <h2 className="text-2xl font-bold text-center text-green-700 mb-8">Location</h2>
+
+                    <div className="rounded-2xl overflow-hidden shadow-md h-[400px]">
+                        <iframe
+                            src={restaurant.mapsLink}
+                            className="w-full h-full border-0"
+                            loading="lazy"
+                            allowFullScreen
+                        />
+                    </div>
+                </section>
+
+                {/* MODAL */}
+                {modalOpen && selected && (
+                    <div
+                        className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+                        onClick={() => setModalOpen(false)}
+                    >
+                        <div
+                            className="bg-white rounded-2xl shadow-xl p-8 w-[92%] max-w-3xl relative"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setModalOpen(false)}
+                                className="absolute top-4 right-6 text-3xl text-gray-500 hover:text-black"
+                            >
+                                <i className="fa-solid fa-xmark"></i>
+                            </button>
+
+                            <div className="flex gap-8">
+                                {/* Image */}
+                                <div className="w-48 h-48 rounded-xl overflow-hidden">
+                                    <img
+                                        src={selected.img}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                {/* Detail */}
+                                <div className="flex-1">
+                                    <h3 className="text-3xl font-bold text-green-700">
+                                        {selected.title}
+                                    </h3>
+
+                                    <p className="text-[var(--orange)] font-bold text-xl mt-3">
+                                        {selected.price}
+                                    </p>
+
+                                    <div className="mt-4 flex gap-3">
+                                        <span className="px-4 py-1 bg-green-100 text-green-700 rounded-xl text-sm">
+                                            Aneka Lontong
+                                        </span>
+                                        <span className="px-4 py-1 bg-orange-100 text-orange-700 rounded-xl text-sm">
+                                            Gurih
+                                        </span>
+                                    </div>
+
+                                    <p className="text-gray-600 mt-4 leading-relaxed">
+                                        Nasi ayam goreng khas bu kris dengan sambal bawang pedas...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+            </div>
 
             {/* FOOTER (JANGAN DIUBAH) */}
             <footer className="text-gray-200 text-center py-10 bg-[var(--green-dark)] mt-10">

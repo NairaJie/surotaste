@@ -279,7 +279,7 @@ const Culinary = () => {
                 className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
               >
                 <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
-                  ★ {r.rate}
+                  ★ {r.rating}
                 </span>
 
                 <img
@@ -291,7 +291,7 @@ const Culinary = () => {
                 <div className="p-4 text-left">
                   <h3 className="text-[var(--green-700)] font-semibold">{r.name}</h3>
                   <p className="text-[var(--orange)] text-sm flex items-center gap-1 mt-1">
-                    <i className="fa-solid fa-location-dot"></i> {r.loc}
+                    <i className="fa-solid fa-location-dot"></i> {r.location}
                   </p>
                 </div>
               </div>

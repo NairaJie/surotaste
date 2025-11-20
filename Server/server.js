@@ -3,6 +3,7 @@ const cors = require("cors");
 const sequelize = require("./config/db");
 const foodRoutes = require("./routes/foodRoutes");
 const restaurantRoutes = require("./routes/restaurantRoutes");
+const culinaryRoutes = require("./routes/culinaryRoutes");
 
 const logger = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
@@ -21,6 +22,7 @@ app.use(express.json());
 // Routes
 app.use("/api/foods", foodRoutes);
 app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/culinary", culinaryRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

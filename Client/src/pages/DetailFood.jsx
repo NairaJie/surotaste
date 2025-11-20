@@ -3,13 +3,43 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "../index.css";
 
+import rujakCingur from "../assets/foods/rujak-cingur2.jpg";
+import penyetBukris from "../assets/foods/penyet-bukris2.jpg";
+import nasiCampur from "../assets/foods/nasi-campur.jpg";
+import nasiKrawu from "../assets/foods/nasi-krawu.jpg";
+import nasiKuning from "../assets/foods/nasi-kuning.jpg";
+import sotoCakHar2 from "../assets/foods/soto-cakhar2.jpg";
+import lontongKupang from "../assets/foods/lontong-kupang.jpg";
+import sateKlopo from "../assets/foods/sate-klopo.png";
+import lontongBalap from "../assets/foods/lontong-balap.jpg";
+import rawon from "../assets/foods/rawon.jpg";
+import kikil from "../assets/foods/kikil.jpg";
+import nasiCumi from "../assets/foods/nasi-cumi.jpg";
+import tahuTek from "../assets/foods/tahu-tek.jpg";
+
+const foodImages = {
+    "Rujak Cingur": rujakCingur,
+    "Penyetan": penyetBukris,
+    "Nasi Campur": nasiCampur,
+    "Nasi Krawu": nasiKrawu,
+    "Nasi Kuning": nasiKuning,
+    "Soto": sotoCakHar2,
+    "Lontong Kupang": lontongKupang,
+    "Sate Klopo": sateKlopo,
+    "Lontong Balap": lontongBalap,
+    "Rawon": rawon,
+    "Kikil": kikil,
+    "Nasi Cumi": nasiCumi,
+    "Tahu Tek": tahuTek,
+};
+
 export default function DetailFood() {
     const { name } = useParams(); // ambil nama dari URL
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [food, setFood] = useState(null);
 
     useEffect(() => {
-        fetch (`http://localhost:5050/api/foods/name/${name}`)
+        fetch(`http://localhost:5050/api/foods/name/${name}`)
             .then(res => res.json())
             .then(data => setFood(data))
             .catch(err => console.log(err));
@@ -44,117 +74,118 @@ export default function DetailFood() {
                 <i className="fa-solid fa-arrow-left"></i>
             </button>
 
+            <div className="max-w-7xl mx-auto px-12">
+
+                {/* HERO SECTION */}
+                <section className="pt-48 px-6 lg:px-20 py-28 bg-white">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+
+                        {/* TEKS KIRI */}
+                        <div>
+                            <h1 className="text-5xl font-bold text-green-700 mb-5">{food.name}</h1>
 
 
-            {/* HERO SECTION */}
-            <section className="px-6 lg:px-20 py-28 bg-white">
-                <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+                            <div className="flex gap-2 mb-5">
+                                <span className="bg-green-100 text-green-800 px-4 py-1.5 rounded-lg text-sm font-medium">
+                                    {food.meals}
+                                </span>
+                                <span className="bg-orange-100 text-orange-400 px-4 py-1.5 rounded-lg text-sm font-medium">
+                                    {food.category}
+                                </span>
+                            </div>
 
-                    {/* TEKS KIRI */}
-                    <div>
-                        <h1 className="text-5xl font-bold text-green-700 mb-5">{food.name}</h1>
-
-
-                        <div className="flex gap-2 mb-5">
-                            <span className="bg-green-100 text-green-800 px-4 py-1.5 rounded-lg text-sm font-medium">
-                                {food.meals}
-                            </span>
-                            <span className="bg-orange-100 text-orange-400 px-4 py-1.5 rounded-lg text-sm font-medium">
-                                {food.category}
-                            </span>
+                            <p className="text-gray-700 leading-relaxed text-lg">
+                                {food.description}
+                            </p>
                         </div>
 
-                        <p className="text-gray-700 leading-relaxed text-lg">
-                            {food.description}
-                        </p>
-                    </div>
-
-                    {/* GAMBAR KANAN */}
-                    <div className="flex justify-center lg:justify-end">
-                        <div className="relative w-full max-w-[700px] h-[580px]">
-                            <img
-                                src="../assets/foods/default-cingur.png"
-                                alt="Rujak Cingur"
-                                className="w-full h-full object-cover rounded-2xl shadow-2xl border border-gray-100"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* HISTORY SECTION */}
-            <section className="px-12 py-10">
-                <div className="bg-[#FBF8F5] rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <h2 className="text-center text-2xl font-bold text-green-700 mb-4">
-                        History
-                    </h2>
-                    <p className="text-gray-700 text-base leading-relaxed text-justify">
-                        {food.history}
-                    </p>
-                </div>
-            </section>
-
-            {/* VARIASI RUJAK CINGUR */}
-            <section className="px-12 py-12">
-                <h2 className="text-2xl font-bold text-center text-green-700 mb-8">
-                    {food.name}
-                </h2>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                    {[
-                        {
-                            img: "../assets/foods/cingur-wagiti.jpg",
-                            title: "Rujak Cingur Bu Wagiti",
-                            restaurant: "Depot Bu Wagiti",
-                            price: "Rp25,000",
-                        },
-                        {
-                            img: "../assets/foods/cingur-bbm.jpg",
-                            title: "Rujak Cingur",
-                            restaurant: "Warung BBM",
-                            price: "Rp25,000",
-                        },
-                        {
-                            img: "../assets/foods/cingur-genteng.jpg",
-                            title: "Rujak Cingur",
-                            restaurant: "Rujak Genteng Surabaya",
-                            price: "Rp25,000",
-                        },
-                        {
-                            img: "../assets/foods/cingur-delta.jpg",
-                            title: "Rujak Cingur",
-                            restaurant: "Warung Delta",
-                            price: "Rp25,000",
-                        },
-                    ].map((item, i) => (
-                        <div
-                            key={i}
-                            className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
-                        >
-                            <img
-                                src={item.img}
-                                alt={item.title}
-                                className="w-full h-56 object-cover"
-                            />
-
-                            <div className="p-4">
-                                <h3 className="text-[var(--green-700)] font-semibold text-lg">
-                                    {item.title}
-                                </h3>
-
-                                <p className="text-[var(--green-700)] text-sm">
-                                    {item.restaurant}
-                                </p>
-
-                                <p className="text-[var(--orange)] font-bold mt-1">
-                                    {item.price}
-                                </p>
+                        {/* GAMBAR KANAN */}
+                        <div className="flex justify-center lg:justify-end">
+                            <div className="relative w-full max-w-[580px] aspect-square">
+                                <img
+                                    src={foodImages[food.name] || rujakCingur}
+                                    alt={food.name}
+                                    className="w-full h-full object-cover rounded-2xl shadow-2xl border border-gray-100"
+                                />
                             </div>
                         </div>
-                    ))}
-                </div>
-            </section>
+                    </div>
+                </section>
 
+                {/* HISTORY SECTION */}
+                <section className="px-12 py-10">
+                    <div className="bg-[#FBF8F5] rounded-2xl p-8 shadow-sm border border-gray-100">
+                        <h2 className="text-center text-2xl font-bold text-green-700 mb-4">
+                            History
+                        </h2>
+                        <p className="text-gray-700 text-base leading-relaxed text-justify">
+                            {food.history}
+                        </p>
+                    </div>
+                </section>
+
+                {/* VARIASI RUJAK CINGUR */}
+                <section className="px-12 py-12">
+                    <h2 className="text-2xl font-bold text-center text-green-700 mb-8">
+                        {food.name}
+                    </h2>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                        {[
+                            {
+                                img: "../assets/foods/cingur-wagiti.jpg",
+                                title: "Rujak Cingur Bu Wagiti",
+                                restaurant: "Depot Bu Wagiti",
+                                price: "Rp25,000",
+                            },
+                            {
+                                img: "../assets/foods/cingur-bbm.jpg",
+                                title: "Rujak Cingur",
+                                restaurant: "Warung BBM",
+                                price: "Rp25,000",
+                            },
+                            {
+                                img: "../assets/foods/cingur-genteng.jpg",
+                                title: "Rujak Cingur",
+                                restaurant: "Rujak Genteng Surabaya",
+                                price: "Rp25,000",
+                            },
+                            {
+                                img: "../assets/foods/cingur-delta.jpg",
+                                title: "Rujak Cingur",
+                                restaurant: "Warung Delta",
+                                price: "Rp25,000",
+                            },
+                        ].map((item, i) => (
+                            <div
+                                key={i}
+                                className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+                            >
+                                <img
+                                    src={item.img}
+                                    alt={item.title}
+                                    className="w-full h-56 object-cover"
+                                />
+
+                                <div className="p-4">
+                                    <h3 className="text-[var(--green-700)] font-semibold text-lg">
+                                        {item.title}
+                                    </h3>
+
+                                    <p className="text-[var(--green-700)] text-sm">
+                                        {item.restaurant}
+                                    </p>
+
+                                    <p className="text-[var(--orange)] font-bold mt-1">
+                                        {item.price}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+            </div>
 
             {/* FOOTER */}
             <footer className="text-gray-200 text-center py-10 bg-[var(--green-dark)] mt-10">
