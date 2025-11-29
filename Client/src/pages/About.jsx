@@ -4,27 +4,14 @@ import logo from "../assets/logo.png";
 import aboutHero from "../assets/about-hero.png";
 import vision from "../assets/our-vision.jpg";
 import mission from "../assets/our-mission.jpg";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function About() {
   return (
     <div className="font-poppins text-gray-800">
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-12 py-4">
-          <img src={logo} alt="Logo" className="w-28 h-auto object-contain" />
-
-          <ul className="hidden md:flex items-center space-x-8 font-semibold text-[var(--green-700)]">
-            <li><Link to="/" className="hover:text-[var(--orange)] transition">Home</Link></li>
-            <li><Link to="/culinary" className="hover:text-[var(--orange)] transition">Culinary</Link></li>
-            <li><Link to="/about" className="hover:text-[var(--orange)] transition">About</Link></li>
-            <li><Link to="/mealplan" className="hover:text-[var(--orange)] transition">Mealplan</Link></li>
-          </ul>
-
-          <button className="bg-[var(--green-700)] text-white px-10 py-2.5 rounded-full font-semibold hover:bg-[#1f5a32] transition-all shadow-md hover:scale-[1.03]">
-            Sign In
-          </button>
-        </div>
-      </nav>
+      <Navbar/>
 
       {/* HERO SECTION */}
      
@@ -161,21 +148,7 @@ export default function About() {
       </section>
 
       {/* FOOTER */}
-      <footer className="text-gray-200 text-center py-10 bg-[var(--green-dark)] mt-10">
-        <ul className="flex justify-center space-x-10 mb-8 text-gray-300 text-lg">
-          {["Home", "Culinary", "About", "Mealplan"].map((item) => (
-            <li key={item}>
-              <a href="#" className="hover:text-white transition">
-                {item}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <img src={logo} alt="Logo" className="w-36 mx-auto mb-4" />
-        <p className="text-sm text-gray-300">
-          © 2025 | SuroTaste. All rights reserved.
-        </p>
-      </footer>
+      <Footer/>
     </div>
   );
 }
