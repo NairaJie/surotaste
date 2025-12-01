@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import Profile from "../pages/Profile";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
@@ -23,10 +24,11 @@ export default function Navbar() {
         {user ? (
           <Link to="/profile">
             <img
-              src={user?.photoURL ?? "/profile.png"}
+              src={user?.photoURL || user?.picture || "/profile.png"}
               alt="Profile"
-              className="w-12 h-12 rounded-full object-cover border border-gray-300 cursor-pointer hover:scale-105 transition"
+              className="w-12 h-12 rounded-full object-cover border cursor-pointer"
             />
+
           </Link>
         ) : (
           <Link to="/signin">

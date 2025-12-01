@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Mealplan from "./pages/Mealplan";
@@ -9,8 +10,19 @@ import ResultUpload from "./pages/ResultUpload";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import DetailRestaurant from "./pages/DetailRestaurant";
+import Profile from "./pages/Profile";
 
 function App() {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token);
+      window.history.replaceState({}, "", "/profile");
+    }
+  }, []);
+  
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -22,6 +34,7 @@ function App() {
       <Route path="/uploadphoto" element={<UploadPhoto />} />
       <Route path="/resultupload" element={<ResultUpload />} />
       <Route path="/detailfood/:name" element={<DetailFood />} />
+       <Route path="/profile" element={<Profile />} />
       <Route path="/detailrestaurant/:name" element={<DetailRestaurant />} />
     </Routes>
   );
