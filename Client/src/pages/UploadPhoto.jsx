@@ -9,10 +9,24 @@ import Footer from "../components/Footer";
 export default function UploadPhoto() {
     const navigate = useNavigate();
 
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // simpan file ke state browser (session)
+        navigate("/resultupload", { state: { file } });
+    };
+
+    const openFileDialog = () => {
+        const input = document.getElementById("uploadInput");
+        if (input) input.click();   // <-- INI YANG BUKA FOLDER
+    };
+
+
     return (
         <div className="antialiased text-gray-800 bg-white">
             {/* NAVBAR */}
-            <Navbar/>
+            <Navbar />
 
             {/* MAIN CONTENT */}
             <main className="text-center px-6 md:px-16 py-16 md:py-20 mt-24">
@@ -38,7 +52,7 @@ export default function UploadPhoto() {
 
                 {/* Tombol Unggah */}
                 <button
-                    onClick={() => navigate("/resultupload")}
+                    onClick={openFileDialog}
                     className="bg-[var(--orange)] text-white font-semibold py-3 px-9 rounded-xl
                     shadow-lg transition-all duration-200 hover:bg-[#ff5b1f] 
                     hover:-translate-y-0.5 mb-14"
@@ -51,7 +65,9 @@ export default function UploadPhoto() {
                     id="uploadInput"
                     accept="image/*"
                     className="hidden"
+                    onChange={(e) => handleFileUpload(e)}
                 />
+
 
                 {/* Gambar Hero */}
                 <div className="flex justify-center">
@@ -64,7 +80,7 @@ export default function UploadPhoto() {
             </main>
 
             {/* FOOTER */}
-            <Footer/>
+            <Footer />
         </div>
     );
 }
