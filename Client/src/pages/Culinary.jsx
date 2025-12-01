@@ -40,7 +40,6 @@ import penyetanBangAli from "../assets/restaurants/penyetan-bangali.jpg";
 import lontongBalapRajawali from "../assets/restaurants/lontong-balap-rajawali.jpg";
 import sotoAyamCakhar from "../assets/restaurants/soto-ayam-cakhar.jpg";
 import Navbar from "../components/Navbar";
-import FoodController from "../../../Server/controllers/foodController";
 import Footer from "../components/Footer";
 
 const Culinary = () => {

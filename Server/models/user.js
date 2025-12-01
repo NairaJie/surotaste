@@ -13,7 +13,11 @@ const User = sequelize.define("User", {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: true,   // null untuk akun Google
+        allowNull: true, // null untuk akun Google
+    },
+    googleId: {
+        type: DataTypes.STRING,
+        allowNull: true, // hanya ada untuk akun Google
     },
     photoURL: {
         type: DataTypes.STRING,
