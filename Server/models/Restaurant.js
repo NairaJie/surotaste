@@ -31,6 +31,12 @@ const Restaurant = sequelize.define("Restaurant", {
   mapsLink: {
     type: DataTypes.STRING,
   },
+
+  region: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  
 });
 
 module.exports = Restaurant;

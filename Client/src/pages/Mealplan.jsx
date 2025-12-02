@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 const Mealplan = () => {
+  const navigate = useNavigate();
+
   const [lokasi, setLokasi] = useState("");
   const [preferensi, setPreferensi] = useState([]);
   const [waktu, setWaktu] = useState("");
@@ -29,23 +30,55 @@ const Mealplan = () => {
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!lokasi || !waktu || preferensi.length < 1 || !budget || !jumlahOrang) {
       alert("Harap isi semua field terlebih dahulu!");
       return;
     }
 
-    const mealplanData = { lokasi, waktu, preferensi, budget, jumlahOrang };
-    localStorage.setItem("mealplanData", JSON.stringify(mealplanData));
-    console.log("✅ Data tersimpan:", mealplanData);
-    window.location.href = "/rekomendasi";
+    // Convert budget & jumlahOrang ke integer
+
+    const mealplanData = {
+      location: lokasi,                 // string
+      foodType: preferensi[0],          // ambil satu preferensi
+      mealTime: waktu,                  // string
+      budget: parseInt(budget.replace(/\D/g, ""), 10), // integer
+      numberOfPeople: parseInt(jumlahOrang, 10)       // integer
+    };
+
+    try {
+      const res = await fetch(
+        "https://kingrayyy-smart-travel-ai.hf.space/food-recommendations",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(mealplanData),
+        }
+      );
+
+      const data = await res.json();
+      console.log("HASIL API:", data);
+
+      if (!res.ok) {
+        alert("Server error: " + JSON.stringify(data));
+        return;
+      }
+
+      localStorage.setItem("mealplanResult", JSON.stringify(data));
+      navigate("/mealplanresult");
+    } catch (err) {
+      console.error(err);
+      alert("Gagal mengambil rekomendasi dari server!");
+    }
   };
+
+
+
+
 
   return (
     <div className="font-[Poppins] bg-white text-gray-800">
-
-      {/* NAVBAR (TIDAK DIUBAH) */}
-      <Navbar/>
+      <Navbar />
 
       {/* HERO */}
       <section className="text-center mt-32 px-4">
@@ -72,10 +105,9 @@ const Mealplan = () => {
                 key={item}
                 onClick={() => setLokasi(item)}
                 className={`px-6 py-2 rounded-full border font-medium transition
-                  ${
-                    lokasi === item
-                      ? "bg-[var(--green-dark)] text-white border-[var(--green-dark)] shadow-md"
-                      : "bg-white text-gray-800 border-gray-300 hover:bg-[var(--green-dark)] hover:text-white"
+                  ${lokasi === item
+                    ? "bg-[var(--green-dark)] text-white border-[var(--green-dark)] shadow-md"
+                    : "bg-white text-gray-800 border-gray-300 hover:bg-[var(--green-dark)] hover:text-white"
                   }`}
               >
                 {item}
@@ -97,10 +129,9 @@ const Mealplan = () => {
                 key={item}
                 onClick={() => togglePreferensi(item)}
                 className={`px-5 py-2 rounded-full border font-medium transition
-                  ${
-                    preferensi.includes(item)
-                      ? "bg-[var(--green-dark)] text-white border-[var(--green-dark)] shadow-md"
-                      : "bg-white text-gray-800 border-gray-300 hover:bg-[var(--green-dark)] hover:text-white"
+                  ${preferensi.includes(item)
+                    ? "bg-[var(--green-dark)] text-white border-[var(--green-dark)] shadow-md"
+                    : "bg-white text-gray-800 border-gray-300 hover:bg-[var(--green-dark)] hover:text-white"
                   }`}
               >
                 {item}
@@ -122,10 +153,9 @@ const Mealplan = () => {
                 key={item}
                 onClick={() => setWaktu(item)}
                 className={`px-5 py-2 rounded-full border font-medium transition
-                  ${
-                    waktu === item
-                      ? "bg-[var(--green-dark)] text-white border-[var(--green-dark)] shadow-md"
-                      : "bg-white text-gray-800 border-gray-300 hover:bg-[var(--green-dark)] hover:text-white"
+                  ${waktu === item
+                    ? "bg-[var(--green-dark)] text-white border-[var(--green-dark)] shadow-md"
+                    : "bg-white text-gray-800 border-gray-300 hover:bg-[var(--green-dark)] hover:text-white"
                   }`}
               >
                 {item}
@@ -134,7 +164,7 @@ const Mealplan = () => {
           </div>
         </div>
 
-        {/* Input Budget & Jumlah Orang */}
+        {/* Budget & Orang */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           {/* Budget */}
           <div>
@@ -184,8 +214,7 @@ const Mealplan = () => {
         </div>
       </section>
 
-      {/* FOOTER (TIDAK DIUBAH) */}
-      <Footer/>
+      <Footer />
     </div>
   );
 };

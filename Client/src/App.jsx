@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import DetailRestaurant from "./pages/DetailRestaurant";
 import Profile from "./pages/Profile";
+import MealplanResult from "./pages/MealplanResult";
 
 function App() {
   useEffect(() => {
@@ -22,19 +23,20 @@ function App() {
       window.history.replaceState({}, "", "/profile");
     }
   }, []);
-  
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/mealplan" element={<Mealplan />} />
+      <Route path="/mealplanresult" element={<MealplanResult />} />
       <Route path="/culinary" element={<Culinary />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/uploadphoto" element={<UploadPhoto />} />
       <Route path="/resultupload" element={<ResultUpload />} />
       <Route path="/detailfood/:name" element={<DetailFood />} />
-       <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/detailrestaurant/:name" element={<DetailRestaurant />} />
     </Routes>
   );
