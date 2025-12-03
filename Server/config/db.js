@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize("surotaste", "root", "", {
   host: "localhost",
@@ -6,8 +6,11 @@ const sequelize = new Sequelize("surotaste", "root", "", {
   logging: false,
 });
 
-sequelize.authenticate()
-  .then(() => console.log("Database connected"))
-  .catch(err => console.log("DB error:", err));
+try {
+  await sequelize.authenticate();
+  console.log("Database connected");
+} catch (err) {
+  console.log("DB error:", err);
+}
 
-module.exports = sequelize;
+export default sequelize;

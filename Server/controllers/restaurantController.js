@@ -1,57 +1,33 @@
 // controllers/restaurantController.js
-const Restaurant = require("../models/Restaurant");
+import Restaurant from "../models/restaurant.js";
+import asyncHandler from "../middleware/asyncHandler.js";
 
-// CREATE
-exports.createRestaurant = async (req, res) => {
-  try {
-    const restaurant = await Restaurant.create(req.body);
-    res.status(201).json(restaurant);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+export const createRestaurant = asyncHandler(async (req, res) => {
+  const restaurant = await Restaurant.create(req.body);
+  res.status(201).json(restaurant);
+});
 
-// READ all
-exports.getRestaurants = async (req, res) => {
-  try {
-    const restaurants = await Restaurant.findAll();
-    res.json(restaurants);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+export const getRestaurants = asyncHandler(async (req, res) => {
+  const restaurants = await Restaurant.findAll();
+  res.json(restaurants);
+});
 
-// READ by id
-exports.getRestaurantById = async (req, res) => {
-  try {
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    if (!restaurant) return res.status(404).json({ message: "Restaurant not found" });
-    res.json(restaurant);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+export const getRestaurantById = asyncHandler(async (req, res) => {
+  const restaurant = await Restaurant.findByPk(req.params.id);
+  if (!restaurant) return res.status(404).json({ msg: "Not found" });
+  res.json(restaurant);
+});
 
-// UPDATE
-exports.updateRestaurant = async (req, res) => {
-  try {
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    if (!restaurant) return res.status(404).json({ message: "Restaurant not found" });
-    await restaurant.update(req.body);
-    res.json(restaurant);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+export const updateRestaurant = asyncHandler(async (req, res) => {
+  const restaurant = await Restaurant.findByPk(req.params.id);
+  if (!restaurant) return res.status(404).json({ msg: "Not found" });
+  await restaurant.update(req.body);
+  res.json(restaurant);
+});
 
-// DELETE
-exports.deleteRestaurant = async (req, res) => {
-  try {
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    if (!restaurant) return res.status(404).json({ message: "Restaurant not found" });
-    await restaurant.destroy();
-    res.json({ message: "Restaurant deleted" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+export const deleteRestaurant = asyncHandler(async (req, res) => {
+  const restaurant = await Restaurant.findByPk(req.params.id);
+  if (!restaurant) return res.status(404).json({ msg: "Not found" });
+  await restaurant.destroy();
+  res.json({ msg: "Deleted" });
+});

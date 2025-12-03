@@ -1,6 +1,7 @@
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const User = require("../models/User");
+// utils/googleAuth.js
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import User from "../models/user.js";
 
 passport.use(
   new GoogleStrategy(
@@ -16,7 +17,7 @@ passport.use(
           defaults: {
             name: profile.displayName,
             email: profile.emails?.[0]?.value,
-            photo: profile.photos?.[0]?.value,
+            photoURL: profile.photos?.[0]?.value,
           },
         });
 
@@ -28,4 +29,4 @@ passport.use(
   )
 );
 
-module.exports = passport;
+export default passport;

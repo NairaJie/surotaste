@@ -1,55 +1,55 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const session = require("express-session");
-const sequelize = require("./config/db");
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import session from "express-session";
+import morgan from "morgan";
+import passport from "./utils/googleAuth.js";
+import sequelize from "./config/db.js";
+import { adminJs, adminRouter } from "./setup/admin.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 // Routes
-const foodRoutes = require("./routes/foodRoutes");
-const restaurantRoutes = require("./routes/restaurantRoutes");
-const culinaryRoutes = require("./routes/culinaryRoutes");
-const authRoutes = require("./routes/authRoutes");
-const menuRoutes = require("./routes/menuRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
-
-// Middleware
-const logger = require("./middleware/logger");
-const errorHandler = require("./middleware/errorHandler");
-
-// Passport (Google OAuth)
-const passport = require("./utils/googleAuth");
+import foodRoutes from "./routes/foodRoutes.js";
+import restaurantRoutes from "./routes/restaurantRoutes.js";
+import culinaryRoutes from "./routes/culinaryRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import menuRoutes from "./routes/menuRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
+const PORT = 5050;
 
-// CORS
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST", "PUT"],
-    credentials: true,
-  })
-);
-
-
+// Middleware
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 app.use(express.json());
+app.use(morgan("dev"));
 
-// Session (wajib untuk OAuth)
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "secretkey",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// Session
+app.use(session({
+  secret: process.env.SESSION_SECRET || "secretkey",
+  resave: false,
+  saveUninitialized: false, // Ubah ke false
+  cookie: { 
+    maxAge: 24 * 60 * 60 * 1000, // 24 jam
+    secure: false, // Set true jika pakai HTTPS
+  }
+}));
 
-// Passport init
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Logger
-app.use(logger);
+// Static files
+app.use("/uploads", express.static("uploads"));
 
-// Routes
+// AdminJS - HARUS SEBELUM ROUTES LAIN
+app.use(adminJs.options.rootPath, adminRouter);
+
+// API Routes
 app.use("/api/foods", foodRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/culinary", culinaryRoutes);
@@ -57,29 +57,25 @@ app.use("/api/auth", authRoutes);
 app.use("/api/menus", menuRoutes);
 app.use("/api/reviews", reviewRoutes);
 
-
 // Test endpoint
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// DB Connection
-sequelize
-  .authenticate()
-  .then(() => console.log("Database connected"))
-  .catch((err) => console.log("Error connecting DB:", err));
-
-// Sync DB
-sequelize
-  .sync()
-  .then(() => console.log("Database synced"))
-  .catch((err) => console.log(err));
-
-// Error Handler
+// Error Handler - HARUS DI PALING BAWAH
 app.use(errorHandler);
 
-// Start Server
-const PORT = 5050;
-app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
-);
+// Database & Server - HANYA 1X
+sequelize
+  .sync() // Atau authenticate() saja jika tabel sudah ada
+  .then(() => {
+    console.log("✅ Database connected & synced");
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on http://localhost:${PORT}`);
+      console.log(`✅ Admin panel: http://localhost:${PORT}/admin`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ Database error:", err);
+    process.exit(1);
+  });

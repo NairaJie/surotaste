@@ -4,19 +4,26 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@adminjs/express": "^6.1.1",
+    "@adminjs/sequelize": "^4.1.1",
+    "@adminjs/sql": "^2.2.6",
+    "@adminjs/upload": "^4.0.2",
+    "adminjs": "^7.8.17",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-formidable": "^1.2.0",
     "express-session": "^1.18.2",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
     "multer": "^2.0.2",
     "mysql2": "^3.15.3",
     "passport": "^0.7.0",
@@ -28,6 +35,6 @@
   "devDependencies": {
     "nodemon": "^3.1.11"
   },
-  "type": "commonjs",
+  "type": "module",
   "description": ""
 }

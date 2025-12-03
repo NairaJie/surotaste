@@ -1,32 +1,14 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 const User = sequelize.define("User", {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: true, // null untuk akun Google
-    },
-    googleId: {
-        type: DataTypes.STRING,
-        allowNull: true, // hanya ada untuk akun Google
-    },
-    photoURL: {
-        type: DataTypes.STRING,
-        defaultValue: "/profile.png",
-    },
-    provider: {
-        type: DataTypes.ENUM("local", "google"),
-        defaultValue: "local",
-    }
+    name: DataTypes.STRING,
+    email: { type: DataTypes.STRING, unique: true },
+    password: DataTypes.STRING,
+    googleId: DataTypes.STRING,
+    photoURL: { type: DataTypes.STRING, defaultValue: "/profile.png" },
+    provider: { type: DataTypes.ENUM("local", "google"), defaultValue: "local" },
+    role: { type: DataTypes.ENUM("user", "admin"), defaultValue: "user" },
 });
 
-module.exports = User;
+export default User;

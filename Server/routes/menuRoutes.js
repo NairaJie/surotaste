@@ -1,12 +1,14 @@
 // routes/menuRoutes.js
-const express = require("express");
+import express from "express";
+import * as menuController from "../controllers/menuController.js";
+import asyncHandler from "../middleware/asyncHandler.js";
+
 const router = express.Router();
-const menuController = require("../controllers/menuController");
 
-router.post("/", menuController.createMenu);
-router.get("/", menuController.getAllMenus);
-router.get("/:id", menuController.getMenuById);
-router.put("/:id", menuController.updateMenu);
-router.delete("/:id", menuController.deleteMenu);
+router.post("/", asyncHandler(menuController.createMenu));
+router.get("/", asyncHandler(menuController.getAllMenus));
+router.get("/:id", asyncHandler(menuController.getMenuById));
+router.put("/:id", asyncHandler(menuController.updateMenu));
+router.delete("/:id", asyncHandler(menuController.deleteMenu));
 
-module.exports = router;
+export default router;

@@ -1,40 +1,30 @@
-const Review = require("../models/Review");
-const asyncHandler = require("../middleware/asyncHandler");
+import Review from "../models/review.js";
+import asyncHandler from "../middleware/asyncHandler.js";
 
-module.exports = {
-    createReview: asyncHandler(async (req, res) => {
-        const { rating, description, userId, restaurantId } = req.body;
+export const createReview = asyncHandler(async (req, res) => {
+  const review = await Review.create(req.body);
+  res.status(201).json(review);
+});
 
-        const review = await Review.create({
-            rating,
-            description,
-            userId,
-            restaurantId
-        });
+export const getAllReviews = asyncHandler(async (req, res) => {
+  const reviews = await Review.findAll({
+    include: [
+      { association: "reviewUser", attributes: ["id", "name", "photoURL"] },
+      { association: "restaurantReview" }
+    ]
+  });
 
-        res.status(201).json(review);
-    }),
+  res.json(reviews);
+});
 
-    getAllReviews: asyncHandler(async (req, res) => {
-        const reviews = await Review.findAll({
-            include: [
-                { association: "reviewUser", attributes: ["id", "name", "photoURL"] },
-                { association: "restaurantReview" }
-            ]
-        });
+export const getReviewsByRestaurant = asyncHandler(async (req, res) => {
+  const reviews = await Review.findAll({
+    where: { restaurantId: req.params.id },
+    include: [
+      { association: "reviewUser", attributes: ["id", "name", "photoURL"] },
+      { association: "restaurantReview" }
+    ]
+  });
 
-        res.json(reviews);
-    }),
-
-    getReviewsByRestaurant: asyncHandler(async (req, res) => {
-        const reviews = await Review.findAll({
-            where: { restaurantId: req.params.id },
-            include: [
-                { association: "reviewUser", attributes: ["id", "name", "photoURL"] },
-                { association: "restaurantReview" }
-            ]
-        });
-
-        res.json(reviews);
-    })
-};
+  res.json(reviews);
+});

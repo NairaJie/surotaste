@@ -1,42 +1,20 @@
-// models/Restaurant.js
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 const Restaurant = sequelize.define("Restaurant", {
-  name: {
+  name: { type: DataTypes.STRING, allowNull: false },
+  rating: DataTypes.FLOAT,
+  openHours: DataTypes.STRING,
+  description: DataTypes.TEXT,
+  location: DataTypes.STRING,
+  instagram: DataTypes.STRING,
+  whatsapp: DataTypes.STRING,
+  image: DataTypes.STRING,
+  mapsLink: DataTypes.STRING,
+  region: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  rating: {
-    type: DataTypes.FLOAT,
-  },
-  openHours: {
-    type: DataTypes.STRING,
-  },
-  description: {
-    type: DataTypes.TEXT,
-  },
-  location: {
-    type: DataTypes.STRING,
-  },
-  instagram: {
-    type: DataTypes.STRING,
-  },
-  whatsapp: {
-    type: DataTypes.STRING,
-  },
-  image: {
-    type: DataTypes.STRING,
-  },
-  mapsLink: {
-    type: DataTypes.STRING,
-  },
-
-  region: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  
 });
 
-module.exports = Restaurant;
+export default Restaurant;

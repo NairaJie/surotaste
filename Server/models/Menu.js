@@ -1,37 +1,15 @@
-// models/Menu.js
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
-const Restaurant = require("./Restaurant");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 const Menu = sequelize.define("Menu", {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  taste: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-  },
-  image: {
-    type: DataTypes.STRING,   // <--- tambahan atribut image
-  }
+  name: { type: DataTypes.STRING, allowNull: false },
+  price: { type: DataTypes.INTEGER, allowNull: false },
+  category: { type: DataTypes.STRING, allowNull: false },
+  taste: { type: DataTypes.STRING, allowNull: false },
+  description: DataTypes.TEXT,
+  image: DataTypes.STRING,
+
+  restaurantId: { type: DataTypes.INTEGER, allowNull: false }
 });
 
-// Relasi
-Menu.belongsTo(Restaurant, {
-  foreignKey: "restaurantId",
-  as: "restaurant",
-});
-
-module.exports = Menu;
+export default Menu;

@@ -1,26 +1,15 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 const Food = sequelize.define("Food", {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  category: {
-    type: DataTypes.TEXT,
-  },
-  meals: {
-    type: DataTypes.TEXT,
-  },
-  description: {
-    type: DataTypes.TEXT,
-  },
-  history: {
-    type: DataTypes.TEXT,
-  },
-  image: {
-    type: DataTypes.STRING,
-  }
+  name: { type: DataTypes.STRING, allowNull: false },
+  category: DataTypes.TEXT,
+  meals: DataTypes.TEXT,
+  description: DataTypes.TEXT,
+  history: DataTypes.TEXT,
+  image: DataTypes.STRING,
+
+  restaurantId: { type: DataTypes.INTEGER },
 });
 
-module.exports = Food;
+export default Food;

@@ -1,9 +1,9 @@
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import User from "../models/user.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // REGISTER
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
   const exists = await User.findOne({ where: { email } });
@@ -20,13 +20,12 @@ exports.register = async (req, res) => {
   res.json({
     success: true,
     message: "Register success",
-    user
+    user,
   });
-
 };
 
 // LOGIN
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ where: { email } });
@@ -43,14 +42,14 @@ exports.login = async (req, res) => {
     success: true,
     message: "Login success",
     token,
-    user
+    user,
   });
 };
 
-exports.getMe = async (req, res) => {
+export const getMe = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ["id", "name", "email", "photoURL"]
+      attributes: ["id", "name", "email", "photoURL"],
     });
 
     if (!user) {

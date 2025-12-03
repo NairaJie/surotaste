@@ -1,10 +1,12 @@
-const express = require("express");
+// routes/reviewRoutes.js
+import express from "express";
+import { createReview, getAllReviews, getReviewsByRestaurant } from "../controllers/reviewController.js";
+import validateReview from "../middleware/validateReview.js";
+
 const router = express.Router();
-const reviewController = require("../controllers/reviewController");
-const validateReview = require("../middleware/validateReview");
 
-router.post("/", validateReview, reviewController.createReview);
-router.get("/", reviewController.getAllReviews);
-router.get("/restaurant/:id", reviewController.getReviewsByRestaurant);
+router.post("/", validateReview, createReview);
+router.get("/", getAllReviews);
+router.get("/restaurant/:id", getReviewsByRestaurant);
 
-module.exports = router;
+export default router;
