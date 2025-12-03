@@ -9,6 +9,7 @@ const foodRoutes = require("./routes/foodRoutes");
 const restaurantRoutes = require("./routes/restaurantRoutes");
 const culinaryRoutes = require("./routes/culinaryRoutes");
 const authRoutes = require("./routes/authRoutes");
+const menuRoutes = require("./routes/menuRoutes");
 
 // Middleware
 const logger = require("./middleware/logger");
@@ -52,6 +53,7 @@ app.use("/api/foods", foodRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/culinary", culinaryRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/menus", menuRoutes);
 
 // Test endpoint
 app.get("/", (req, res) => {

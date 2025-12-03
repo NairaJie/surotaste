@@ -22,6 +22,7 @@ import bok from "../assets/foods/nasibok.jpg";
 // Reviews
 import userPic from "../assets/usercomment.jpg";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function DetailRestaurant() {
     const [modalOpen, setModalOpen] = useState(false);
