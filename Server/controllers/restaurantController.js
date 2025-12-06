@@ -7,6 +7,16 @@ export const createRestaurant = asyncHandler(async (req, res) => {
   res.status(201).json(restaurant);
 });
 
+export const getRestaurantByName = asyncHandler(async (req, res) => {
+  const restaurant = await Restaurant.findOne({
+    where: { name: req.params.name },
+  });
+
+  if (!restaurant) return res.status(404).json({ msg: "Not found" });
+
+  res.json(restaurant);
+});
+
 export const getRestaurants = asyncHandler(async (req, res) => {
   const restaurants = await Restaurant.findAll();
   res.json(restaurants);

@@ -113,7 +113,7 @@ export default function Home() {
             {
               img: sotoAyam,
               title: "Soto Ayam",
-              restaurant: "Warung Ambetukam",
+              restaurant: "Warung Pak Ucup",
               price: "Rp28,000"
             }].map((food, i) => (
               <div

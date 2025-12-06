@@ -3,6 +3,7 @@ import express from "express";
 import {
   createRestaurant,
   getRestaurants,
+  getRestaurantByName,
   getRestaurantById,
   updateRestaurant,
   deleteRestaurant,
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.post("/", createRestaurant);
 router.get("/", getRestaurants);
+router.get("/name/:name", getRestaurantByName);
 router.get("/:id", getRestaurantById);
 router.put("/:id", updateRestaurant);
 router.delete("/:id", deleteRestaurant);
