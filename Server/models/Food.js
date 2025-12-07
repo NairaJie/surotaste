@@ -8,8 +8,6 @@ const Food = sequelize.define("Food", {
   description: DataTypes.TEXT,
   history: DataTypes.TEXT,
   image: DataTypes.STRING,
-
-  restaurantId: { type: DataTypes.INTEGER },
 });
 
 export default Food;

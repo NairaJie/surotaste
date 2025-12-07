@@ -3,9 +3,11 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import morgan from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
 import passport from "./utils/googleAuth.js";
 import sequelize from "./config/db.js";
-import { adminJs, adminRouter } from "./setup/admin.js";
+import { adminJs, adminRouter, UPLOADS_DIR } from "./setup/admin.js";
 import errorHandler from "./middleware/errorHandler.js";
 
 // Routes
@@ -16,6 +18,10 @@ import authRoutes from "./routes/authRoutes.js";
 import menuRoutes from "./routes/menuRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
+// Setup __dirname untuk ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = 5050;
 
@@ -25,6 +31,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
+
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -32,7 +39,7 @@ app.use(morgan("dev"));
 app.use(session({
   secret: process.env.SESSION_SECRET || "secretkey",
   resave: false,
-  saveUninitialized: false, // Ubah ke false
+  saveUninitialized: false,
   cookie: { 
     maxAge: 24 * 60 * 60 * 1000, // 24 jam
     secure: false, // Set true jika pakai HTTPS
@@ -43,8 +50,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Static files
-app.use("/uploads", express.static("uploads"));
+// Static files untuk uploads
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// IMPORTANT: Route untuk AdminJS agar bisa akses uploaded files
+app.use(
+  `${adminJs.options.rootPath}/uploads`, 
+  express.static(path.join(__dirname, "uploads"))
+);
 
 // AdminJS - HARUS SEBELUM ROUTES LAIN
 app.use(adminJs.options.rootPath, adminRouter);

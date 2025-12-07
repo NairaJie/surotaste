@@ -7,8 +7,6 @@ import Menu from "./menu.js";
 import Review from "./review.js";
 
 /* RELASI RESTAURANT */
-Restaurant.hasMany(Food, { foreignKey: "restaurantId" });
-Food.belongsTo(Restaurant, { foreignKey: "restaurantId" });
 
 Restaurant.hasMany(Menu, { foreignKey: "restaurantId" });
 Menu.belongsTo(Restaurant, { foreignKey: "restaurantId" });
