@@ -70,6 +70,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/menus", menuRoutes);
 app.use("/api/reviews", reviewRoutes);
 
+//publik
+app.use("/culinary", express.static(path.join(process.cwd(), "uploads/culinary")));
+app.use("/restaurant", express.static(path.join(process.cwd(), "uploads/restaurant")));
+app.use("/menu", express.static(path.join(process.cwd(), "uploads/menu")));
+app.use("/users", express.static(path.join(process.cwd(), "uploads/users")));
+
 // Test endpoint
 app.get("/", (req, res) => {
   res.send("API is running...");

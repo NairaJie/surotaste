@@ -1,7 +1,8 @@
+// admin/index.js
+
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import AdminJSSequelize from "@adminjs/sequelize";
-import uploadFeature from "@adminjs/upload";
 import path from "path";
 import bcrypt from "bcrypt";
 import { fileURLToPath } from "url";
@@ -9,104 +10,63 @@ import { ComponentLoader } from "adminjs";
 
 import { User, Restaurant, Culinary, Food, Menu, Review } from "../models/index.js";
 
+import { beforeHook } from "../utils/beforeHook.js";
+import { makeUploadFeature } from "../utils/uploadFeatureFactory.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 AdminJS.registerAdapter(AdminJSSequelize);
 
-// Component loader - HARUS dibuat dulu
+// COMPONENT LOADER
 const componentLoader = new ComponentLoader();
 
-// base uploads directory
+// UPLOAD DIR
 const UPLOADS_DIR = path.join(__dirname, "..", "uploads");
 
-// ==========================
-// UNIVERSAL UPLOAD FEATURE
-// ==========================
-const makeUploadFeature = (folderName, useValidation = true) =>
-  uploadFeature({
-    componentLoader,
-    provider: {
-      local: {
-        bucket: UPLOADS_DIR,
-      },
-    },
-
+const addBasicUpload = (modelName, resource) => ({
+  resource,
+  features: [makeUploadFeature(modelName, UPLOADS_DIR, componentLoader)],
+  options: {
     properties: {
-      key: "image",
-      file: "uploadImage",
-      mimeType: useValidation ? "mimeType" : undefined,
+      uploadImage: { isVisible: { edit: true } },
+      image: { isVisible: { list: true, show: true, edit: false } },
     },
-
-    uploadPath: (record, filename) => {
-      const clean = filename.replace(/\s+/g, "-");
-      return `${folderName}/${Date.now()}-${clean}`;
+    actions: {
+      new: { before: beforeHook },
+      edit: { before: beforeHook },
     },
+  },
+});
 
-    // kalau useValidation = false → validation di-skip
-    ...(useValidation && {
-      validation: {
-        mimeTypes: [
-          "image/jpeg",
-          "image/png",
-          "image/jpg",
-          "image/gif",
-          "image/webp",
-        ],
-      },
-    }),
-  });
-
-
-// =============================
-// ADMINJS INSTANCE
-// =============================
 const adminJs = new AdminJS({
   rootPath: "/admin",
-  componentLoader, // CRITICAL: Pass componentLoader di sini juga
+  componentLoader,
 
   resources: [
-    // -------------------------
-    // USER (NO UPLOAD)
-    // -------------------------
+    // USER (with password hash)
     {
       resource: User,
-      features: [makeUploadFeature("users", false)], // TANPA MIME & VALIDATION
-
+      features: [makeUploadFeature("User", UPLOADS_DIR, componentLoader)],
       options: {
-        navigation: { name: "Users", icon: "User" },
-
         properties: {
           uploadImage: { isVisible: { edit: true } },
           image: { isVisible: { list: true, show: true, edit: false } },
-
-          password: {
-            type: "password",
-            isVisible: {
-              list: false,
-              edit: true,
-              filter: false,
-              show: false,
-            },
-          },
         },
 
         actions: {
           new: {
             before: async (req) => {
-              if (req.payload?.password) {
+              if (req.payload?.password)
                 req.payload.password = await bcrypt.hash(req.payload.password, 10);
-              }
               return req;
             },
           },
           edit: {
             before: async (req) => {
-              if (req.payload?.password) {
+              if (req.payload?.password)
                 req.payload.password = await bcrypt.hash(req.payload.password, 10);
-              } else {
-                delete req.payload.password;
-              }
+              else delete req.payload.password;
               return req;
             },
           },
@@ -114,90 +74,22 @@ const adminJs = new AdminJS({
       },
     },
 
+    addBasicUpload("Restaurant", Restaurant),
+    addBasicUpload("Food", Food),
+    addBasicUpload("Menu", Menu),
+    addBasicUpload("Culinary", Culinary),
 
-
-    // -------------------------
-    // RESTAURANT
-    // -------------------------
-    {
-      resource: Restaurant,
-      features: [makeUploadFeature("restaurants")],
-      options: {
-        navigation: { name: "Content", icon: "Restaurant" },
-        properties: {
-          uploadImage: { isVisible: { edit: true } },
-          image: { isVisible: { list: true, show: true, edit: false } },
-        },
-      },
-    },
-
-    // -------------------------
-    // FOOD
-    // -------------------------
-    {
-      resource: Food,
-      features: [makeUploadFeature("foods")],
-      options: {
-        navigation: { name: "Content", icon: "Pizza" },
-        properties: {
-          uploadImage: { isVisible: { edit: true } },
-          image: { isVisible: { list: true, show: true, edit: false } },
-        },
-      },
-    },
-
-    // -------------------------
-    // MENU
-    // -------------------------
-    {
-      resource: Menu,
-      features: [makeUploadFeature("menus")],
-      options: {
-        navigation: { name: "Content", icon: "Menu" },
-        properties: {
-          uploadImage: { isVisible: { edit: true } },
-          image: { isVisible: { list: true, show: true, edit: false } },
-        },
-      },
-    },
-
-    // -------------------------
-    // CULINARY
-    // -------------------------
-    {
-      resource: Culinary,
-      features: [makeUploadFeature("culinary")],
-      options: {
-        navigation: { name: "Content", icon: "Star" },
-        properties: {
-          uploadImage: { isVisible: { edit: true } },
-          image: { isVisible: { list: true, show: true, edit: false } },
-        },
-      },
-    },
-
-    // -------------------------
-    // REVIEW
-    // -------------------------
-    {
-      resource: Review,
-      options: {
-        navigation: { name: "Reviews", icon: "MessageCircle" },
-      },
-    },
+    { resource: Review },
   ],
 
   branding: {
     companyName: "SuroTaste Admin Panel",
     logo: false,
-    favicon: false,
     withMadeWithLove: false,
   },
 });
 
-// =============================
 // AUTH
-// =============================
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
   adminJs,
   {
@@ -219,4 +111,4 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
   }
 );
 
-export { adminJs, adminRouter, UPLOADS_DIR };
+export { adminJs, adminRouter, UPLOADS_DIR};

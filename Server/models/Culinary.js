@@ -3,7 +3,6 @@ import sequelize from "../config/db.js";
 
 const Culinary = sequelize.define("Culinary", {
   name: { type: DataTypes.STRING, allowNull: false },
-  restaurant_name: { type: DataTypes.STRING, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   taste: { type: DataTypes.STRING, allowNull: false },
   category: { type: DataTypes.STRING, allowNull: false },

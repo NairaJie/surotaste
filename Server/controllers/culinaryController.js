@@ -2,6 +2,7 @@ import { Culinary, Food, Restaurant } from "../models/index.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
 // GET ALL
+// GET ALL
 export const getAllCulinary = asyncHandler(async (req, res) => {
   const data = await Culinary.findAll({
     include: [
@@ -10,8 +11,37 @@ export const getAllCulinary = asyncHandler(async (req, res) => {
     ]
   });
 
-  res.json(data);
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+
+  const mapped = data.map(item => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    taste: item.taste,
+    category: item.category,
+
+    // ⬅️ buat image jadi URL lengkap
+    image: item.image ? `${baseUrl}/${item.image}` : null,
+
+    foodId: item.foodId,
+    restaurantId: item.restaurantId,
+
+    // ⬅️ kamu ingin restaurant_name
+    restaurant_name: item.restaurant?.name || null,
+
+    // full nested data tetap ada kalau kamu mau pakai
+    food: item.food,
+    restaurant: {
+      ...item.restaurant?.dataValues,
+      image: item.restaurant?.image
+        ? `${baseUrl}/${item.restaurant.image}`
+        : null
+    }
+  }));
+
+  res.json(mapped);
 });
+
 
 // GET BY ID
 export const getCulinaryById = asyncHandler(async (req, res) => {

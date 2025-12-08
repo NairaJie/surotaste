@@ -16,6 +16,8 @@ import nasiKuning from "../assets/restaurants/nasi-kuning-ambon.jpg";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import CulinaryHome from "../components/CulinaryHome";
+import RestaurantHome from "../components/RestaurantHome";
 
 
 export default function Home() {
@@ -24,39 +26,40 @@ export default function Home() {
       {/* NAVBAR */}
       <Navbar/>
       {/* HERO */}
-      <header className="relative pt-32 pb-24 bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-12">
+      <header className="relative min-h-screen flex items-center bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden pt-24">
+  <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-12 w-full">
+    
+    {/* Text */}
+    <div className="flex flex-col gap-6 max-w-xl">
+      <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
+        <span className="text-[var(--orange)]">Jelajahi Rasa</span> <br />
+        <span className="text-[var(--green-700)]">Khas Surabaya</span>
+      </h1>
 
-          {/* Text */}
-          <div className="flex flex-col gap-6 max-w-xl">
-            <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
-              <span className="text-[var(--orange)]">Jelajahi Rasa</span> <br />
-              <span className="text-[var(--green-700)]">Khas Surabaya</span>
-            </h1>
+      <p className="text-[#13412b] text-lg leading-relaxed">
+        Temukan kuliner legendaris dan hidden gems Surabaya — dari warung legendaris sampai tempat hits kekinian.
+      </p>
 
-            <p className="text-[#13412b] text-lg leading-relaxed">
-              Temukan kuliner legendaris dan hidden gems Surabaya — dari warung legendaris sampai tempat hits kekinian.
-            </p>
+      <div className="flex gap-4 mt-2">
+        <button className="bg-[var(--green-700)] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#1f5a32] hover:scale-105 transition-all shadow-lg">
+          Explore Now
+        </button>
+      </div>
+    </div>
 
-            <div className="flex gap-4 mt-2">
-              <button className="bg-[var(--green-700)] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#1f5a32] hover:scale-105 transition-all shadow-lg">
-                Explore Now
-              </button>
-            </div>
-          </div>
+    {/* Image */}
+    <div className="relative w-full lg:w-[600px] flex justify-center mt-10 lg:mt-0">
+      <div className="absolute -top-10 right-0 bg-[var(--green-dark)] w-[420px] h-[420px] rounded-full blur-3xl opacity-30"></div>
 
-          {/* Image */}
-          <div className="relative w-full lg:w-[600px] flex justify-center mt-10 lg:mt-0">
-            <div className="absolute -top-10 right-0 bg-[var(--green-dark)] w-[420px] h-[420px] rounded-full blur-3xl opacity-30"></div>
+      <img
+        src={heroFood}
+        alt="Hero Food"
+        className="relative z-10 w-[480px] lg:w-[540px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+  </div>
+</header>
 
-            <img
-              src={heroFood}
-              alt="Hero Food"
-              className="relative z-10 w-[480px] lg:w-[540px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        </div>
-      </header>
 
 
       {/* STATISTIK */}
@@ -86,51 +89,7 @@ export default function Home() {
       </section>
 
       {/* TASTE OF SURABAYA */}
-      <section className="py-20 px-12 lg:px-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
-            Taste of Surabaya
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {[{
-              img: rawon,
-              title: "Rawon Setan",
-              restaurant: "Warung Bu Kris",
-              price: "Rp50,000"
-            },
-            {
-              img: segoSambel,
-              title: "Sego Sambel",
-              restaurant: "Warung Mak Ijah",
-              price: "Rp10,000"
-            },
-            {
-              img: rujakCingur,
-              title: "Rujak Cingur",
-              restaurant: "Warung Bu Nah",
-              price: "Rp12,000"
-            },
-            {
-              img: sotoAyam,
-              title: "Soto Ayam",
-              restaurant: "Warung Pak Ucup",
-              price: "Rp28,000"
-            }].map((food, i) => (
-              <div
-                key={i}
-                className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
-              >
-                <img src={food.img} alt={food.title} className="w-full h-56 object-cover" />
-                <div className="p-4">
-                  <h2 className="text-[var(--green-700)] font-semibold">{food.title}</h2>
-                  <p className="text-[var(--green-700)] text-sm">{food.restaurant}</p>
-                  <p className="text-[var(--orange)] font-bold mt-1">{food.price}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CulinaryHome/>
 
 
       {/* CULINARY GUIDE */}
@@ -167,48 +126,12 @@ export default function Home() {
         </div>
       </section>
 
-
-
-
+      
 
       {/* FEATURED RESTAURANT */}
-      <section className="py-20 px-12 lg:px-32 bg-[#Fffff]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
-            Featured Restaurant
-          </h2>
+      <RestaurantHome/>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
-            {[
-              { img: warungBukris, title: "Warung Ibu Kris", loc: "Jl. Kayoon No.46B", rating: "4.9" },
-              { img: rawonPangat, title: "Rawon Pak Pangat", loc: "Jl. Keltintang Baru Sel.I No.15", rating: "4.8" },
-              { img: penyetanAli, title: "Penyetan Bang Ali", loc: "Jl. Simpang Darmo Permai", rating: "4.7" },
-              { img: lontongBalap, title: "Lontong Balap Rajawali", loc: "Jl. Kerembangan Timur", rating: "4.6" },
-              { img: sotoHar, title: "Soto Ayam Cak Har", loc: "Jl. Dr. Ir. H. Soekarno No.220", rating: "4.8" },
-              { img: nasiKuning, title: "Nasi Kuning Ambon", loc: "Jl. Raya Tenggilis Mejoyo", rating: "4.9" },
-            ].map((resto, index) => (
-              <div
-                key={index}
-                className="relative bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
-              >
-
-                <span className="absolute top-3 left-3 bg-[var(--orange)] text-white text-sm font-semibold px-3 py-1 rounded-full shadow-md">
-                  ★ {resto.rating}
-                </span>
-                <img src={resto.img} alt={resto.title} className="w-full h-56 object-cover" />
-                <div className="p-4 text-left">
-                  <h3 className="text-lg font-bold text-[var(--green-700)]">{resto.title}</h3>
-                  <p className="text-sm text-[var(--orange)] mt-1 flex items-center gap-1">
-                    <i className="fa-solid fa-location-dot"></i> {resto.loc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
+     
       {/* FOOTER */}
       <Footer/>
 
