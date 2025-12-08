@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import DetailRestaurant from "./pages/DetailRestaurant";
 import Profile from "./pages/Profile";
 import MealplanResult from "./pages/MealplanResult";
+import Chatbot from "./pages/Chatbot";
 
 function App() {
   useEffect(() => {
@@ -37,6 +38,7 @@ function App() {
       <Route path="/resultupload" element={<ResultUpload />} />
       <Route path="/detailfood/:name" element={<DetailFood />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/chatbot" element={<Chatbot />} />
       <Route path="/detailrestaurant/:name" element={<DetailRestaurant />} />
     </Routes>
   );

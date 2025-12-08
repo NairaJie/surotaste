@@ -103,7 +103,9 @@ export default function Home() {
               Discover Surabaya’s local food and UMKM stories instantly.
               Ask our chatbot anything and get quick answers!
             </p>
-            <button className="bg-[var(--orange)] text-white font-bold text-lg px-10 py-4 rounded-full hover:bg-[#ff5c1a] transition-all shadow-md hover:scale-105">
+            <button 
+            onClick={() => navigate("/chatbot")}
+            className="bg-[var(--orange)] text-white font-bold text-lg px-10 py-4 rounded-full hover:bg-[#ff5c1a] transition-all shadow-md hover:scale-105">
               Chat Now!
             </button>
           </div>
