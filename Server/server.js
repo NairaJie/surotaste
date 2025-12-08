@@ -72,7 +72,7 @@ app.use("/api/reviews", reviewRoutes);
 
 //publik
 app.use("/culinary", express.static(path.join(process.cwd(), "uploads/culinary")));
-app.use("/restaurant", express.static(path.join(process.cwd(), "uploads/restaurant")));
+app.use("/restaurants", express.static(path.join(process.cwd(), "uploads/restaurants")));
 app.use("/menu", express.static(path.join(process.cwd(), "uploads/menu")));
 app.use("/users", express.static(path.join(process.cwd(), "uploads/users")));
 

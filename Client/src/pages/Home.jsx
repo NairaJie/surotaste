@@ -1,19 +1,10 @@
 import React from "react";
 import "../index.css";
-import logo from "../assets/logo.png";
 import heroFood from "../assets/hero-food.png";
 import mascotte from "../assets/mascotte.png";
-import rawon from "../assets/foods/rawon-setan.png";
-import segoSambel from "../assets/foods/sego-sambel.png";
-import rujakCingur from "../assets/foods/rujak-cingur.png";
-import sotoAyam from "../assets/foods/soto-ayam.png";
-import warungBukris from "../assets/restaurants/warung-bukris.png";
-import rawonPangat from "../assets/restaurants/rawon-pakpangat.jpg";
-import penyetanAli from "../assets/restaurants/penyetan-bangali.jpg";
-import lontongBalap from "../assets/restaurants/lontong-balap-rajawali.jpg";
-import sotoHar from "../assets/restaurants/soto-ayam-cakhar.jpg";
-import nasiKuning from "../assets/restaurants/nasi-kuning-ambon.jpg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CulinaryHome from "../components/CulinaryHome";
@@ -21,44 +12,50 @@ import RestaurantHome from "../components/RestaurantHome";
 
 
 export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="antialiased text-gray-800 bg-white">
       {/* NAVBAR */}
-      <Navbar/>
+      <Navbar />
       {/* HERO */}
       <header className="relative min-h-screen flex items-center bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden pt-24">
-  <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-12 w-full">
-    
-    {/* Text */}
-    <div className="flex flex-col gap-6 max-w-xl">
-      <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
-        <span className="text-[var(--orange)]">Jelajahi Rasa</span> <br />
-        <span className="text-[var(--green-700)]">Khas Surabaya</span>
-      </h1>
+        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-12 w-full">
 
-      <p className="text-[#13412b] text-lg leading-relaxed">
-        Temukan kuliner legendaris dan hidden gems Surabaya — dari warung legendaris sampai tempat hits kekinian.
-      </p>
+          {/* Text */}
+          <div className="flex flex-col gap-6 max-w-xl">
+            <h1 className="font-museomoderno font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight">
+              <span className="text-[var(--orange)]">Jelajahi Rasa</span> <br />
+              <span className="text-[var(--green-700)]">Khas Surabaya</span>
+            </h1>
 
-      <div className="flex gap-4 mt-2">
-        <button className="bg-[var(--green-700)] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#1f5a32] hover:scale-105 transition-all shadow-lg">
-          Explore Now
-        </button>
-      </div>
-    </div>
+            <p className="text-[#13412b] text-lg leading-relaxed">
+              Temukan kuliner legendaris dan hidden gems Surabaya — dari warung legendaris sampai tempat hits kekinian.
+            </p>
 
-    {/* Image */}
-    <div className="relative w-full lg:w-[600px] flex justify-center mt-10 lg:mt-0">
-      <div className="absolute -top-10 right-0 bg-[var(--green-dark)] w-[420px] h-[420px] rounded-full blur-3xl opacity-30"></div>
+            <div className="flex gap-4 mt-2">
+              <button
+                onClick={() => navigate("/culinary")}
+                className="bg-[var(--green-700)] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#1f5a32] hover:scale-105 transition-all shadow-lg"
+              >
+                Explore Now
+              </button>
 
-      <img
-        src={heroFood}
-        alt="Hero Food"
-        className="relative z-10 w-[480px] lg:w-[540px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-      />
-    </div>
-  </div>
-</header>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="relative w-full lg:w-[600px] flex justify-center mt-10 lg:mt-0">
+            <div className="absolute -top-10 right-0 bg-[var(--green-dark)] w-[420px] h-[420px] rounded-full blur-3xl opacity-30"></div>
+
+            <img
+              src={heroFood}
+              alt="Hero Food"
+              className="relative z-10 w-[480px] lg:w-[540px] h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        </div>
+      </header>
 
 
 
@@ -89,7 +86,7 @@ export default function Home() {
       </section>
 
       {/* TASTE OF SURABAYA */}
-      <CulinaryHome/>
+      <CulinaryHome />
 
 
       {/* CULINARY GUIDE */}
@@ -126,14 +123,14 @@ export default function Home() {
         </div>
       </section>
 
-      
+
 
       {/* FEATURED RESTAURANT */}
-      <RestaurantHome/>
+      <RestaurantHome />
 
-     
+
       {/* FOOTER */}
-      <Footer/>
+      <Footer />
 
     </div>
   );

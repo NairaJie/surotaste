@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function CulinaryHome() {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:5050/api/culinary")
@@ -60,7 +64,10 @@ export default function CulinaryHome() {
           {foods.map((food, index) => (
             <div
               key={food.id}
-              className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+              onClick={() =>
+                navigate(`/detailrestaurant/${encodeURIComponent(food.restaurant?.name)}`)
+              }
+              className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
               style={{
                 animation: `fadeInUp 0.5s ease forwards`,
                 animationDelay: `${index * 0.15}s`,
