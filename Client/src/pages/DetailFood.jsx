@@ -36,22 +36,40 @@ const foodImages = {
 };
 
 export default function DetailFood() {
-    const { name } = useParams(); // ambil nama dari URL
+    const { name } = useParams();
     const navigate = useNavigate();
-    const [food, setFood] = useState(null);
 
+    const [food, setFood] = useState(null);
+    const [culinaryList, setCulinaryList] = useState([]);
+
+    // 1) Fetch food by name
     useEffect(() => {
         fetch(`http://localhost:5050/api/foods/name/${name}`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Food not found");
+                return res.json();
+            })
             .then(data => setFood(data))
             .catch(err => console.log(err));
     }, [name]);
+
+    // 2) Fetch culinary after food loaded (HOOK SELALU DI LUAR CONDITION)
+    useEffect(() => {
+        if (!food) return;
+
+        fetch(`http://localhost:5050/api/culinary/food/${food.id}`)
+            .then(res => res.json())
+            .then(data => setCulinaryList(data))
+            .catch(err => console.log(err));
+    }, [food]);
+
+
     if (!food) return <div className="p-10">Loading...</div>;
 
     return (
         <div className="antialiased text-gray-800 bg-white">
             {/* NAVBAR */}
-            <Navbar/>
+            <Navbar />
 
             {/* BACK BUTTON */}
             <button
@@ -114,68 +132,50 @@ export default function DetailFood() {
                 {/* VARIASI RUJAK CINGUR */}
                 <section className="px-12 py-12">
                     <h2 className="text-2xl font-bold text-center text-green-700 mb-8">
-                        {food.name}
+                        Variasi {food.name}
                     </h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                        {[
-                            {
-                                img: "../assets/foods/cingur-wagiti.jpg",
-                                title: "Rujak Cingur Bu Wagiti",
-                                restaurant: "Depot Bu Wagiti",
-                                price: "Rp25,000",
-                            },
-                            {
-                                img: "../assets/foods/cingur-bbm.jpg",
-                                title: "Rujak Cingur",
-                                restaurant: "Warung BBM",
-                                price: "Rp25,000",
-                            },
-                            {
-                                img: "../assets/foods/cingur-genteng.jpg",
-                                title: "Rujak Cingur",
-                                restaurant: "Rujak Genteng Surabaya",
-                                price: "Rp25,000",
-                            },
-                            {
-                                img: "../assets/foods/cingur-delta.jpg",
-                                title: "Rujak Cingur",
-                                restaurant: "Warung Delta",
-                                price: "Rp25,000",
-                            },
-                        ].map((item, i) => (
-                            <div
-                                key={i}
-                                className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
-                            >
-                                <img
-                                    src={item.img}
-                                    alt={item.title}
-                                    className="w-full h-56 object-cover"
-                                />
+                        {culinaryList.length === 0 ? (
+                            <p className="col-span-4 text-center text-gray-500">
+                                Belum ada variasi kuliner untuk makanan ini 😢
+                            </p>
+                        ) : (
+                            culinaryList.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+                                >
+                                    <img
+                                        src={`http://localhost:5050/${item.image}`}
+                                        alt={item.name}
+                                        className="w-full h-56 object-cover"
+                                    />
 
-                                <div className="p-4">
-                                    <h3 className="text-[var(--green-700)] font-semibold text-lg">
-                                        {item.title}
-                                    </h3>
+                                    <div className="p-4">
+                                        <h3 className="text-[var(--green-700)] font-semibold text-lg">
+                                            {item.name}
+                                        </h3>
 
-                                    <p className="text-[var(--green-700)] text-sm">
-                                        {item.restaurant}
-                                    </p>
+                                        <p className="text-[var(--green-700)] text-sm">
+                                            {item.restaurant_name}
+                                        </p>
 
-                                    <p className="text-[var(--orange)] font-bold mt-1">
-                                        {item.price}
-                                    </p>
+                                        <p className="text-[var(--orange)] font-bold mt-1">
+                                            Rp{item.price.toLocaleString()}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </section>
+
 
             </div>
 
             {/* FOOTER */}
-            <Footer/>
+            <Footer />
         </div>
     );
 }
