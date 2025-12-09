@@ -9,7 +9,7 @@ export default function CulinaryHome() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("${import.meta.env.VITE_API_URL}/api/culinary")
+    fetch(`${import.meta.env.VITE_API_URL}/api/culinary`) 
       .then((res) => res.json())
       .then((data) => {
         setFoods(data.slice(0, 4)); // ⬅️ tampilkan hanya 4 item
