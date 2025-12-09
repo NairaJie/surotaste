@@ -5,6 +5,8 @@ import Food from "./food.js";
 import Culinary from "./culinary.js";
 import Menu from "./menu.js";
 import Review from "./review.js";
+import SavedRestaurant from "./savedRestaurant.js";
+
 
 /* RELASI RESTAURANT */
 
@@ -26,4 +28,15 @@ Review.belongsTo(User, { foreignKey: "userId" });
 Food.hasMany(Culinary, { foreignKey: "foodId", as: "culinaries" });
 Culinary.belongsTo(Food, { foreignKey: "foodId", as: "food" });
 
-export { sequelize, User, Restaurant, Food, Culinary, Menu, Review }; // Export sequelize juga
+/* SAVED RESTAURANTS RELATION (Many-to-Many) */
+SavedRestaurant.belongsTo(Restaurant, { 
+  foreignKey: "restaurantId",
+  as: "restaurant"
+});
+
+Restaurant.hasMany(SavedRestaurant, {
+  foreignKey: "restaurantId",
+});
+
+
+export { sequelize, User, Restaurant, Food, Culinary, Menu, Review, SavedRestaurant };

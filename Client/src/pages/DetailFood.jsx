@@ -144,7 +144,8 @@ export default function DetailFood() {
                             culinaryList.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300"
+                                    onClick={() => navigate(`/detailrestaurant/${item.restaurantId}`)} // atau item.restaurant.id
+                                    className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
                                 >
                                     <img
                                         src={`http://localhost:5050/${item.image}`}
@@ -167,6 +168,7 @@ export default function DetailFood() {
                                     </div>
                                 </div>
                             ))
+
                         )}
                     </div>
                 </section>

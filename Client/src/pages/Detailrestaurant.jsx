@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+
 
 // IMAGE IMPORTS
 import bukrisHero from "../assets/foods/warungbukris.png";
@@ -15,11 +18,15 @@ import MenuModal from "../components/MenuModal";
 
 
 export default function DetailRestaurant() {
+  const { user } = useContext(AuthContext);
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [selectedHero, setSelectedHero] = useState(null);
+  const [toast, setToast] = useState("");
 
   const [menus, setMenus] = useState([]);
+
+  const [saved, setSaved] = useState(false);
 
 
   const reviews = [
@@ -43,16 +50,51 @@ export default function DetailRestaurant() {
     },
   ];
 
-  const { name } = useParams();
+  const handleSave = async () => {
+    if (!user) {
+      alert("Login dulu ya!");
+      return;
+    }
+
+    const url = saved
+      ? `http://localhost:5050/api/saved/${user.id}/${restaurant.id}`
+      : "http://localhost:5050/api/saved";
+
+    const method = saved ? "DELETE" : "POST";
+
+    const body = saved
+      ? null
+      : JSON.stringify({
+        userId: user.id,
+        restaurantId: restaurant.id,
+      });
+
+    const res = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body,
+    });
+
+    if (res.ok) {
+      setSaved(!saved);
+      setToast(saved ? "Removed from saved ❤️" : "Restaurant saved! ❤️");
+
+      setTimeout(() => setToast(""), 2000);
+    }
+  };
+
+
+
+  const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5050/api/restaurants/name/${encodeURIComponent(name)}`)
-      .then(res => res.json())
-      .then(data => setRestaurant(data))
-      .catch(err => console.log(err));
-  }, [name]);
+    fetch(`http://localhost:5050/api/restaurants/${id}`)
+      .then((res) => res.json())
+      .then((data) => setRestaurant(data))
+      .catch((err) => console.error(err));
+  }, [id]);
 
   useEffect(() => {
     if (!restaurant) return;
@@ -64,7 +106,18 @@ export default function DetailRestaurant() {
   }, [restaurant]);
 
 
-  if (!restaurant) return <div className="p-10">Loading...</div>;
+  useEffect(() => {
+    if (!user || !restaurant) return;
+
+    fetch(`http://localhost:5050/api/saved/check/${user.id}/${restaurant.id}`)
+      .then(res => res.json())
+      .then(data => setSaved(data.saved));
+  }, [user, restaurant]);
+
+
+  if (!restaurant) return <div className="p-6">Loading...</div>;
+
+
 
 
 
@@ -118,19 +171,47 @@ export default function DetailRestaurant() {
 
               {/* Action Buttons */}
               <div className="flex gap-3 mt-6 flex-wrap">
-                <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
-                  <i className="fa-regular fa-heart" /> Save
+                <button
+                  onClick={handleSave}
+                  className={`px-4 py-2 border rounded-xl flex items-center gap-2 transition ${saved ? "bg-red-100 border-red-300" : ""
+                    }`}
+                >
+                  <i
+                    className={`fa-heart text-xl transition-transform ${saved ? "fa-solid text-red-600 scale-110" : "fa-regular"
+                      }`}
+                  />
+                  {saved ? "Saved" : "Save"}
                 </button>
+
+
                 <button className="px-4 py-2 border rounded-xl flex items-center gap-2">
                   <i className="fa-solid fa-share-nodes" /> Share
                 </button>
-                <button className="px-4 py-2 border rounded-xl">
-                  <i className="fab fa-instagram" />
-                </button>
-                <button className="px-4 py-2 border rounded-xl">
+
+                {/* Instagram */}
+                {restaurant.instagram && (
+                  <a
+                    href={`https://${restaurant.instagram.replace("https://", "").replace("http://", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 border rounded-xl"
+                  >
+                    <i className="fab fa-instagram" />
+                  </a>
+                )}
+
+
+                {/* WhatsApp */}
+                <a
+                  href={restaurant.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 border rounded-xl"
+                >
                   <i className="fab fa-whatsapp" />
-                </button>
+                </a>
               </div>
+
             </div>
 
 
@@ -140,7 +221,7 @@ export default function DetailRestaurant() {
               {/* FOTO UTAMA */}
               <div className="w-[420px] h-[420px] rounded-2xl shadow-xl overflow-hidden">
                 <img
-                  src={selectedHero ?? bukrisHero}
+                  src={restaurant.image}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -212,9 +293,16 @@ export default function DetailRestaurant() {
           </div>
         </section>
 
-       
+
 
       </div>
+
+      {toast && (
+        <div className="fixed bottom-6 right-6 bg-green-700 text-white px-4 py-3 rounded-xl shadow-lg animate-bounce z-50">
+          {toast}
+        </div>
+      )}
+
 
       {/* FOOTER (JANGAN DIUBAH) */}
       <Footer />

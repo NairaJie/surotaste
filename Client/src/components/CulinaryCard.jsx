@@ -179,7 +179,7 @@ const CulinaryCard = () => {
             <div
               key={item.id}
               onClick={() =>
-                navigate(`/detailrestaurant/${encodeURIComponent(item.restaurant?.name || "")}`)
+                navigate(`/detailrestaurant/${item.restaurant?.id}`)
               }
               className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
             >

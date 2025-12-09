@@ -54,7 +54,7 @@ export default function CulinaryHome() {
   // ⭐ MAIN UI — fade + slide in animation
   // =========================================
   return (
-    <section className="py-20 px-12 lg:px-32 bg-white">
+    <section className="py-16 px-12  bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <h2 className="text-3xl font-bold text-center mb-10 text-[var(--green-700)]">
           Taste of Surabaya
@@ -65,7 +65,7 @@ export default function CulinaryHome() {
             <div
               key={food.id}
               onClick={() =>
-                navigate(`/detailrestaurant/${encodeURIComponent(food.restaurant?.name)}`)
+                navigate(`/detailrestaurant/${food.restaurant?.id}`)
               }
               className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
               style={{

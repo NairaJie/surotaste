@@ -13,6 +13,8 @@ import DetailRestaurant from "./pages/DetailRestaurant";
 import Profile from "./pages/Profile";
 import MealplanResult from "./pages/MealplanResult";
 import Chatbot from "./pages/Chatbot";
+import Review from "./pages/Review";
+import Save from "./pages/Save";
 
 function App() {
   useEffect(() => {
@@ -39,7 +41,9 @@ function App() {
       <Route path="/detailfood/:name" element={<DetailFood />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/chatbot" element={<Chatbot />} />
-      <Route path="/detailrestaurant/:name" element={<DetailRestaurant />} />
+      <Route path="/review" element={<Review />} />
+      <Route path="/save" element={<Save />} />
+      <Route path="/detailrestaurant/:id" element={<DetailRestaurant />} />
     </Routes>
   );
 }

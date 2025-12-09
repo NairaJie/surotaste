@@ -21,19 +21,19 @@ const FoodCard = () => {
   const navigate = useNavigate();
 
   const foods = [
-    { name: "Rujak Cingur", img: rujakCingur },
+    { name: "Nasi Kuning", img: nasiKuning },
+    { name: "Soto", img: sotoCakHar2 },
+    { name: "Rawon", img: rawon },
     { name: "Penyetan", img: penyetBukris },
     { name: "Nasi Campur", img: nasiCampur },
     { name: "Nasi Krawu", img: nasiKrawu },
-    { name: "Nasi Kuning", img: nasiKuning },
-    { name: "Soto", img: sotoCakHar2 },
     { name: "Lontong Kupang", img: lontongKupang },
     { name: "Sate Klopo", img: sateKlopo },
     { name: "Lontong Balap", img: lontongBalap },
-    { name: "Rawon", img: rawon },
     { name: "Kikil", img: kikil },
     { name: "Nasi Cumi", img: nasiCumi },
     { name: "Tahu Tek", img: tahuTek },
+    { name: "Rujak Cingur", img: rujakCingur },
   ];
 
   return (

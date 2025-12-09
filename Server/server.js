@@ -17,6 +17,7 @@ import culinaryRoutes from "./routes/culinaryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import menuRoutes from "./routes/menuRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import savedRestaurantRoutes from "./routes/savedRestaurantRoutes.js";
 
 // Setup __dirname untuk ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -70,6 +71,8 @@ app.use("/api/culinary", culinaryRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/menus", menuRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/saved", savedRestaurantRoutes);
+
 
 //publik
 app.use("/culinary", express.static(path.join(process.cwd(), "uploads/culinary")));

@@ -99,7 +99,10 @@ export default function Profile() {
   return (
     <div className="font-poppins text-gray-800">
       <Navbar />
-      <ProfileNavbar />
+
+      <div className="pt-24">
+        <ProfileNavbar />
+      </div>
 
       <div className="px-8 md:px-24 pt-10 flex gap-16">
         {/* Avatar */}

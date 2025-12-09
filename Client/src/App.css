@@ -58,3 +58,9 @@
 .loader-food {
   animation: wiggle 0.6s ease-in-out infinite;
 }
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
