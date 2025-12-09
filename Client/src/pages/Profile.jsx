@@ -9,9 +9,9 @@ import Footer from "../components/Footer";
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
-
   const token = localStorage.getItem("token");
 
+  // Ambil data user saat load
   useEffect(() => {
     if (!token) return;
 
@@ -20,12 +20,16 @@ export default function Profile() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log("ME RESPONSE:", res.data);
-        setUser(res.data.user);        // ← BACKEND KIRIM user
+        const userData = res.data.user;
+        setUser({
+          ...userData,
+          photoURL: userData.image || "/profile.png", // fallback
+        });
       })
       .catch(() => toast.error("Failed to load profile"));
   }, [token]);
 
+  // Save name update
   const handleSave = async () => {
     try {
       const res = await axios.put(
@@ -34,15 +38,51 @@ export default function Profile() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log("UPDATE RESPONSE:", res.data);
-
-      setUser(res.data.data);          // ← UPDATE KIRIM data
+      setUser((prev) => ({
+        ...prev,
+        ...res.data.data,
+        photoURL: res.data.data.image || prev.photoURL,
+      }));
       toast.success("Profile updated!");
       setEditMode(false);
     } catch (err) {
       toast.error("Failed to update profile");
     }
   };
+
+  // Upload photo
+  const handlePhotoUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("photo", file);
+
+  try {
+    const res = await axios.post(
+      "http://localhost:5050/api/auth/upload-photo",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // update state user pakai data dari backend
+    setUser((prev) => ({
+      ...prev,
+      photoURL: `http://localhost:5050${res.data.photoURL}`,
+    }));
+
+    toast.success("Profile photo updated!");
+  } catch (err) {
+    console.log(err);
+    toast.error("Failed to upload photo");
+  }
+};
+
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -59,11 +99,28 @@ export default function Profile() {
 
       <div className="px-8 md:px-24 pt-10 flex gap-16">
         {/* Avatar */}
-        <div className="relative">
+        <div className="relative group">
           <img
-            src={user.photoURL || "https://i.pravatar.cc/200"}
+            src={user.photoURL || "/profile.png"}
+            alt="Profile"
             className="w-56 h-56 object-cover rounded-full"
           />
+
+          {/* Upload button overlay */}
+          {editMode && (
+            <label
+              className="absolute bottom-4 left-1/2 -translate-x-1/2
+      bg-black/70 text-white px-4 py-2 rounded-lg cursor-pointer text-sm transition"
+            >
+              Change Photo
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhotoUpload}
+              />
+            </label>
+          )}
         </div>
 
         {/* Form */}

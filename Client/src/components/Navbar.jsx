@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Profile from "../pages/Profile";
 import { AuthContext } from "../context/AuthContext";
+import ProfilePhoto from "../assets/profile.png";
 
 export default function Navbar() {
   const { user, loading } = useContext(AuthContext);
@@ -24,10 +25,15 @@ export default function Navbar() {
         {user ? (
           <Link to="/profile">
             <img
-              src={user?.photoURL || user?.picture || "/profile.png"}
-              alt="Profile"
-              className="w-12 h-12 rounded-full object-cover border cursor-pointer"
+              src={
+                user?.photoURL
+                  ? `http://localhost:5050${user.photoURL}`
+                  : user?.picture || ProfilePhoto
+              }
+              className="w-12 h-12 rounded-full object-cover"
             />
+
+
 
           </Link>
         ) : (

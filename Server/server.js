@@ -53,6 +53,7 @@ app.use(passport.session());
 // Static files untuk uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+
 // IMPORTANT: Route untuk AdminJS agar bisa akses uploaded files
 app.use(
   `${adminJs.options.rootPath}/uploads`, 

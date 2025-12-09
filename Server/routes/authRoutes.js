@@ -5,8 +5,23 @@ import jwt from "jsonwebtoken";
 import asyncHandler from "../middleware/asyncHandler.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import User from "../models/user.js";
+import upload from "../middleware/uploadMiddleware.js";
+import multer from "multer";
+import path from "path";
 
 const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/users"); // <-- folder user
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, `user-${req.user.id}${ext}`); // nama file unik per user
+  },
+});
+
+const uploadPhoto = multer({ storage });
 
 // =============== NORMAL AUTH =============== //
 router.post("/register", asyncHandler(register));
@@ -63,4 +78,19 @@ router.put(
   })
 );
 
+router.post(
+  "/upload-photo",
+  authMiddleware,
+  uploadPhoto.single("photo"),
+  asyncHandler(async (req, res) => {
+    if (!req.file)
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+
+    const user = await User.findByPk(req.user.id);
+    user.image = `/uploads/users/${req.file.filename}`; // simpan path relatif
+    await user.save();
+
+    res.json({ success: true, photoURL: user.image });
+  })
+);
 export default router;

@@ -49,7 +49,7 @@ export const login = async (req, res) => {
 export const getMe = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ["id", "name", "email", "photoURL"],
+      attributes: ["id", "name", "email", "image"],
     });
 
     if (!user) {
