@@ -2,9 +2,11 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Toast from "../components/Toast";
+import { useLocation } from "react-router-dom";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, setUser } = useContext(AuthContext);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -30,21 +32,29 @@ export default function SignIn() {
     setUser(res.user);
     showToast("Login successful!", "success");
 
-    setTimeout(() => navigate("/"), 1200);
+    const redirectTo = location.state?.redirectTo || "/";
+    setTimeout(() => navigate(redirectTo, { replace: true }), 1200);
   };
+
 
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:5050/api/auth/google";
   };
 
+  if (location.state?.redirectTo) {
+    navigate(location.state.redirectTo);
+  } else {
+    navigate("/"); // default homepage
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-r from-[#fff8f3] to-[#f3fff5] overflow-hidden">
-      
+
       <Toast message={toast.message} type={toast.type} />
 
       {/* Tombol Back */}
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className="absolute top-8 left-8 text-green-700 text-3xl hover:text-green-900 transition"
       >
         <i className="fa-solid fa-arrow-left"></i>

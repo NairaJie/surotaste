@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import mascot from "../assets/mascotte.png";
 import { IoSend, IoArrowBack } from "react-icons/io5";
 import { FiHelpCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export default function ChatBot() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef(null);
-  const navigate = useNavigate();
 
   const suggestions = [
     "Cariin makanan enak dengan harga terjangkau dong!",
@@ -48,7 +48,7 @@ export default function ChatBot() {
     setIsLoading(false);
   };
 
-  // === AUTO SCROLL ===
+  // Auto scroll
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTo({
@@ -61,12 +61,12 @@ export default function ChatBot() {
   return (
     <div className="w-full min-h-screen bg-white flex flex-col">
 
-      {/* ====================== HEADER ====================== */}
+      {/* HEADER */}
       <div className="fixed top-0 left-0 w-full bg-white z-50 shadow">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <IoArrowBack
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/culinary")}
               className="text-2xl cursor-pointer text-green-700 hover:text-green-900 transition"
             />
             <img src={mascot} alt="Cak Suroyo" className="w-10 h-10" />
@@ -80,7 +80,7 @@ export default function ChatBot() {
         </div>
       </div>
 
-      {/* ====================== HELP MODAL ====================== */}
+      {/* HELP MODAL */}
       {isHelpOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-[100]">
           <div className="bg-white rounded-2xl p-6 w-11/12 max-w-md shadow-xl">
@@ -103,7 +103,7 @@ export default function ChatBot() {
         </div>
       )}
 
-      {/* ====================== MAIN AREA ====================== */}
+      {/* CHAT AREA */}
       <div
         ref={chatRef}
         className={`flex-1 overflow-y-auto ${
@@ -112,7 +112,7 @@ export default function ChatBot() {
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-          {/* ================= START SCREEN ================= */}
+          {/* START SCREEN */}
           {messages.length === 0 && (
             <div className="flex flex-col items-center text-center">
               <h2 className="text-3xl leading-relaxed mb-8">
@@ -121,7 +121,6 @@ export default function ChatBot() {
               </h2>
 
               <div className="max-w-2xl w-full">
-
                 <div className="flex gap-3 overflow-x-auto hide-scrollbar mt-12 mb-8">
                   {suggestions.map((prompt, i) => (
                     <button
@@ -152,12 +151,11 @@ export default function ChatBot() {
                     <IoSend />
                   </button>
                 </div>
-
               </div>
             </div>
           )}
 
-          {/* ================= CHAT BUBBLES ================= */}
+          {/* CHAT BUBBLES */}
           {messages.length > 0 && (
             <>
               {messages.map((msg, index) => (
@@ -195,48 +193,28 @@ export default function ChatBot() {
         </div>
       </div>
 
-      {/* ====================== MODE CHAT ====================== */}
+      {/* CHAT INPUT */}
       {messages.length > 0 && (
-        <>
-          <div className="fixed bottom-20 left-0 w-full bg-white z-30 mt-10 mb-6">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 pb-3">
-              <div className="flex gap-3 overflow-x-auto hide-scrollbar">
-                {suggestions.map((prompt, i) => (
-                  <button
-                    key={i}
-                    onClick={() => sendMessage(prompt)}
-                    className="bg-[#fff8ee] text-green-800 border border-green-200 
-                    px-4 py-2 rounded-xl whitespace-nowrap hover:bg-green-200 
-                    transition shadow-sm active:scale-95 text-sm"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
+        <div className="fixed bottom-0 left-0 w-full bg-white shadow-2xl z-40">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
+            <div className="flex items-center gap-3 bg-white border rounded-full px-6 py-3 shadow">
+              <input
+                type="text"
+                placeholder="Ketik pesan anda disini"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+                className="flex-1 outline-none"
+              />
+              <button
+                onClick={() => sendMessage(input)}
+                className="bg-green-700 p-3 rounded-full text-white"
+              >
+                <IoSend />
+              </button>
             </div>
           </div>
-
-          <div className="fixed bottom-0 left-0 w-full bg-white shadow-2xl z-40">
-            <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
-              <div className="flex items-center gap-3 bg-white border rounded-full px-6 py-3 shadow">
-                <input
-                  type="text"
-                  placeholder="Ketik pesan anda disini"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-                  className="flex-1 outline-none"
-                />
-                <button
-                  onClick={() => sendMessage(input)}
-                  className="bg-green-700 p-3 rounded-full text-white"
-                >
-                  <IoSend />
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
+        </div>
       )}
     </div>
   );

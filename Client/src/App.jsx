@@ -12,7 +12,7 @@ import SignUp from "./pages/SignUp";
 import DetailRestaurant from "./pages/DetailRestaurant";
 import Profile from "./pages/Profile";
 import MealplanResult from "./pages/MealplanResult";
-import Chatbot from "./pages/Chatbot";
+import ChatBotPage from "./pages/ChatBotPage";
 import Review from "./pages/Review";
 import Save from "./pages/Save";
 
@@ -40,7 +40,7 @@ function App() {
       <Route path="/resultupload" element={<ResultUpload />} />
       <Route path="/detailfood/:name" element={<DetailFood />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/chatbot" element={<Chatbot />} />
+      <Route path="/chatbot" element={<ChatBotPage />} />
       <Route path="/review" element={<Review />} />
       <Route path="/save" element={<Save />} />
       <Route path="/detailrestaurant/:id" element={<DetailRestaurant />} />
