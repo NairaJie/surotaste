@@ -9,7 +9,7 @@ import UploadPhoto from "./pages/UploadPhoto";
 import ResultUpload from "./pages/ResultUpload";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import DetailRestaurant from "./pages/DetailRestaurant";
+import DetailRestaurant from "./pages/Detailrestaurant";
 import Profile from "./pages/Profile";
 import MealplanResult from "./pages/MealplanResult";
 import ChatBotPage from "./pages/ChatBotPage";
