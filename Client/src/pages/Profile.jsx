@@ -5,11 +5,14 @@ import { toast } from "react-hot-toast";
 import ProfileNavbar from "../components/ProfileNavbar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const token = localStorage.getItem("token");
+  const { updateUserProfile } = useContext(AuthContext);
 
   // Ambil data user saat load
   useEffect(() => {
@@ -23,7 +26,7 @@ export default function Profile() {
         const userData = res.data.user;
         setUser({
           ...userData,
-          photoURL: userData.image || "/profile.png", // fallback
+          photoURL: userData.image, // fallback
         });
       })
       .catch(() => toast.error("Failed to load profile"));
@@ -52,36 +55,37 @@ export default function Profile() {
 
   // Upload photo
   const handlePhotoUpload = async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const formData = new FormData();
-  formData.append("photo", file);
+    const formData = new FormData();
+    formData.append("photo", file);
 
-  try {
-    const res = await axios.post(
-      "http://localhost:5050/api/auth/upload-photo",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    try {
+      const res = await axios.post(
+        "http://localhost:5050/api/auth/upload-photo",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    // update state user pakai data dari backend
-    setUser((prev) => ({
-      ...prev,
-      photoURL: `http://localhost:5050${res.data.photoURL}`,
-    }));
+      setUser((prev) => ({
+        ...prev,
+        image: res.data.photoURL, // backend sudah kirim path relatif
+      }));
 
-    toast.success("Profile photo updated!");
-  } catch (err) {
-    console.log(err);
-    toast.error("Failed to upload photo");
-  }
-};
+      updateUserProfile({ image: res.data.photoURL });
+
+      toast.success("Profile photo updated!");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to upload photo");
+    }
+  };   // ← INI TETAP ADA (MENUTUP FUNGSI)
 
 
   const logout = () => {
@@ -101,7 +105,7 @@ export default function Profile() {
         {/* Avatar */}
         <div className="relative group">
           <img
-            src={user.photoURL || "/profile.png"}
+            src={user.image ? `http://localhost:5050${user.image}` : "/profile.png"}
             alt="Profile"
             className="w-56 h-56 object-cover rounded-full"
           />

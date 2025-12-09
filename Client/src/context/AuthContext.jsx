@@ -6,7 +6,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // AUTO LOGIN IF TOKEN EXISTS
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -25,7 +24,6 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  // REGISTER
   const register = async (name, email, password) => {
     const res = await fetch("http://localhost:5050/api/auth/register", {
       method: "POST",
@@ -36,7 +34,6 @@ export function AuthProvider({ children }) {
     return res.json();
   };
 
-  // LOGIN
   const login = async (email, password) => {
     const res = await fetch("http://localhost:5050/api/auth/login", {
       method: "POST",
@@ -47,8 +44,16 @@ export function AuthProvider({ children }) {
     return res.json();
   };
 
+  // ➜ NEW FUNCTION to update global user state
+  const updateUserProfile = (updatedFields) => {
+    setUser((prev) => ({
+      ...prev,
+      ...updatedFields,
+    }));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, login, register }}>
+    <AuthContext.Provider value={{ user, setUser, loading, login, register, updateUserProfile }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import CuteLoader from "../components/CuteLoader";
 
 export default function ResultUpload() {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ export default function ResultUpload() {
 
       <div className="pt-12 pb-20 flex justify-center">
         <div className="bg-[#f8f5ee] p-8 rounded-[30px] shadow-sm max-w-xl text-center">
-          
+
           {/* Preview image */}
           <img
             src={URL.createObjectURL(file)}
@@ -82,16 +83,14 @@ export default function ResultUpload() {
 
           {/* Prediction */}
           {!prediction ? (
-            <p className="mt-6 text-lg">Mendeteksi...</p>
+            <div className="mt-6">
+              <CuteLoader />
+            </div>
           ) : (
             <>
               <h2 className="text-4xl font-bold text-green-800 mt-6">
                 {prediction.label}
               </h2>
-
-              <p className="text-gray-600 mt-2">
-                Akurasi: {(prediction.confidence * 100).toFixed(2)}%
-              </p>
             </>
           )}
         </div>

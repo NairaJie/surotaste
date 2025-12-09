@@ -26,12 +26,14 @@ export default function Navbar() {
           <Link to="/profile">
             <img
               src={
-                user?.photoURL
-                  ? `http://localhost:5050${user.photoURL}`
+                user?.image
+                  ? `http://localhost:5050${user.image}`
                   : user?.picture || ProfilePhoto
               }
+
               className="w-12 h-12 rounded-full object-cover"
             />
+
 
 
 
