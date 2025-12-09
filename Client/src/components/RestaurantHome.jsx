@@ -12,7 +12,7 @@ export default function RestaurantHome() {
             .then((res) => res.json())
             .then((data) => {
                 // Tampilkan hanya 8
-                setRestaurants(data.slice(0, 8));
+                setRestaurants(data.slice(0, 6));
                 setLoading(false);
             })
             .catch((err) => {
