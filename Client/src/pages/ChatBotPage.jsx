@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import ChatBot from "./ChatBot";
+import ChatBot from "./Chatbot";
 import mascot from "../assets/mascotte.png"; // pakai ilustrasi lucu
 
 export default function ChatBotPage() {
