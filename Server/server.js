@@ -73,7 +73,7 @@ app.use("/api/reviews", reviewRoutes);
 //publik
 app.use("/culinary", express.static(path.join(process.cwd(), "uploads/culinary")));
 app.use("/restaurants", express.static(path.join(process.cwd(), "uploads/restaurants")));
-app.use("/menu", express.static(path.join(process.cwd(), "uploads/menu")));
+app.use("/menus", express.static(path.join(process.cwd(), "uploads/menus")));
 app.use("/users", express.static(path.join(process.cwd(), "uploads/users")));
 
 // Test endpoint
