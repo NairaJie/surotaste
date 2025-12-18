@@ -1,70 +1,66 @@
-// controllers/restaurantController.js
-import Restaurant from "../models/restaurant.js";
-import asyncHandler from "../middleware/asyncHandler.js";
+import {
+  getAllRestaurants,
+  getRestaurantById,
+  getRestaurantByName,
+  createRestaurant,
+  updateRestaurant,
+  deleteRestaurant,
+} from "../repositories/restaurantRepo.js";
 
-// GET ALL
-export const getRestaurants = asyncHandler(async (req, res) => {
-  const data = await Restaurant.findAll();
+const getRestaurants = async (req, res) => {
+  const data = await getAllRestaurants();
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
-  const mapped = data.map(item => ({
-    ...item.dataValues,
-
-    // FULL URL IMAGE
-    image: item.image ? `${baseUrl}/${item.image}` : null,
+  const mapped = data.map(r => ({
+    ...r,
+    image: r.image ? `${baseUrl}/${r.image}` : null,
   }));
 
   res.json(mapped);
-});
+};
 
-// GET BY ID
-export const getRestaurantById = asyncHandler(async (req, res) => {
-  const item = await Restaurant.findByPk(req.params.id);
-
-  if (!item) return res.status(404).json({ msg: "Not found" });
-
-  const baseUrl = `${req.protocol}://${req.get("host")}`;
-
-  res.json({
-    ...item.dataValues,
-    image: item.image ? `${baseUrl}/${item.image}` : null,
-  });
-});
-
-// GET BY NAME
-export const getRestaurantByName = asyncHandler(async (req, res) => {
-  const item = await Restaurant.findOne({ where: { name: req.params.name } });
-
-  if (!item) return res.status(404).json({ msg: "Not found" });
+const getRestaurantDetail = async (req, res) => {
+  const restaurant = await getRestaurantById(req.params.id);
+  if (!restaurant) {
+    return res.status(404).json({ message: "Not found" });
+  }
 
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
   res.json({
-    ...item.dataValues,
-    image: item.image ? `${baseUrl}/${item.image}` : null,
+    ...restaurant,
+    image: restaurant.image ? `${baseUrl}/${restaurant.image}` : null,
   });
-});
+};
 
-// CREATE
-export const createRestaurant = asyncHandler(async (req, res) => {
-  const restaurant = await Restaurant.create(req.body);
-  res.status(201).json(restaurant);
-});
-
-// UPDATE
-export const updateRestaurant = asyncHandler(async (req, res) => {
-  const restaurant = await Restaurant.findByPk(req.params.id);
-  if (!restaurant) return res.status(404).json({ msg: "Not found" });
-
-  await restaurant.update(req.body);
+const getByName = async (req, res) => {
+  const restaurant = await getRestaurantByName(req.params.name);
+  if (!restaurant) {
+    return res.status(404).json({ message: "Not found" });
+  }
   res.json(restaurant);
-});
+};
 
-// DELETE
-export const deleteRestaurant = asyncHandler(async (req, res) => {
-  const restaurant = await Restaurant.findByPk(req.params.id);
-  if (!restaurant) return res.status(404).json({ msg: "Not found" });
+const create = async (req, res) => {
+  const id = await createRestaurant(req.body);
+  res.status(201).json({ success: true, id });
+};
 
-  await restaurant.destroy();
-  res.json({ msg: "Deleted" });
-});
+const update = async (req, res) => {
+  await updateRestaurant(req.params.id, req.body);
+  res.json({ success: true, message: "Updated" });
+};
+
+const remove = async (req, res) => {
+  await deleteRestaurant(req.params.id);
+  res.json({ success: true, message: "Deleted" });
+};
+
+export default {
+  getRestaurants,
+  getRestaurantDetail,
+  getByName,
+  create,
+  update,
+  remove,
+};

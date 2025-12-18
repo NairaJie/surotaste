@@ -6,7 +6,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import passport from "./utils/googleAuth.js";
-import sequelize from "./config/db.js";
+import sequelize from "./setup/sequelize.js";
 import { adminJs, adminRouter, UPLOADS_DIR } from "./setup/admin.js";
 import errorHandler from "./middleware/errorHandler.js";
 
@@ -28,8 +28,7 @@ const PORT = 5050;
 
 // Middleware
 app.use(cors({
-  origin: 'https://surotaste.infinitelearningstudent.id',
-  // origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -90,16 +89,18 @@ app.get("/", (req, res) => {
 app.use(errorHandler);
 
 // Database & Server - HANYA 1X
+// AdminJS DB connection (Sequelize only for admin)
 sequelize
-  .sync() // Atau authenticate() saja jika tabel sudah ada
+  .authenticate()
   .then(() => {
-    console.log("✅ Database connected & synced");
+    console.log("✅ Admin DB connected");
+
     app.listen(PORT, () => {
       console.log(`✅ Server running on http://localhost:${PORT}`);
       console.log(`✅ Admin panel: http://localhost:${PORT}/admin`);
     });
   })
   .catch((err) => {
-    console.error("❌ Database error:", err);
+    console.error("❌ Admin DB error:", err);
     process.exit(1);
   });

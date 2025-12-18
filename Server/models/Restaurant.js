@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../setup/sequelize.js";
+
 
 const Restaurant = sequelize.define("Restaurant", {
   name: { type: DataTypes.STRING, allowNull: false },

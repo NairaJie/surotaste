@@ -1,16 +1,10 @@
-import { Sequelize } from "sequelize";
+import mysql from "mysql2/promise";
 
-const sequelize = new Sequelize("surotaste", "root", "", {
-  host: "localhost",
-  dialect: "mysql",
-  logging: false,
+const db = mysql.createPool({
+  host: "127.0.0.1", // 🔥 sama
+  user: "root",
+  password: "",
+  database: "surotaste",
 });
 
-try {
-  await sequelize.authenticate();
-  console.log("Database connected");
-} catch (err) {
-  console.log("DB error:", err);
-}
-
-export default sequelize;
+export default db;

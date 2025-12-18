@@ -1,42 +1,49 @@
-import User from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {
+  findUserByEmail,
+  findUserById,
+  createLocalUser,
+} from "../repositories/userRepo.js";
 
 // REGISTER
-export const register = async (req, res) => {
+const register = async (req, res) => {
   const { name, email, password } = req.body;
 
-  const exists = await User.findOne({ where: { email } });
-  if (exists) return res.status(400).json({ msg: "Email already used" });
+  const exists = await findUserByEmail(email);
+  if (exists) {
+    return res.status(400).json({ msg: "Email already used" });
+  }
 
   const hashed = await bcrypt.hash(password, 10);
-
-  const user = await User.create({
-    name,
-    email,
-    password: hashed,
-  });
+  const userId = await createLocalUser({ name, email, password: hashed });
 
   res.json({
     success: true,
     message: "Register success",
-    user,
+    userId,
   });
 };
 
 // LOGIN
-export const login = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ where: { email } });
+  const user = await findUserByEmail(email);
   if (!user) return res.status(400).json({ msg: "User not found" });
+
+  if (user.provider !== "local") {
+    return res.status(400).json({ msg: "Login with Google instead" });
+  }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(400).json({ msg: "Wrong password" });
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+  const token = jwt.sign(
+    { id: user.id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 
   res.json({
     success: true,
@@ -46,18 +53,14 @@ export const login = async (req, res) => {
   });
 };
 
-export const getMe = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.user.id, {
-      attributes: ["id", "name", "email", "image"],
-    });
+// GET ME
+const getMe = async (req, res) => {
+  const user = await findUserById(req.user.id);
+  res.json({ success: true, user });
+};
 
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    res.json({ success: true, user });
-  } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
-  }
+export default {
+  register,
+  login,
+  getMe,
 };

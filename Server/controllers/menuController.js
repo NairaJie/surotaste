@@ -1,75 +1,57 @@
-import Menu from "../models/menu.js";
-import Restaurant from "../models/restaurant.js";
-import asyncHandler from "../middleware/asyncHandler.js";
+import {
+  getMenuByRestaurant,
+  getAllMenus,
+  getMenuById,
+  createMenu,
+  updateMenu,
+  deleteMenu,
+} from "../repositories/menuRepo.js";
 
-// CREATE
-export const createMenu = asyncHandler(async (req, res) => {
-  const menu = await Menu.create(req.body);
-  res.status(201).json(menu);
-});
-
-// GET ALL
-export const getAllMenus = asyncHandler(async (req, res) => {
+const getMenusByRestaurantId = async (req, res) => {
+  const menus = await getMenuByRestaurant(req.params.id);
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
-  const menus = await Menu.findAll({
-    include: { model: Restaurant, as: "restaurant" },
-  });
-
-  const formatted = menus.map(m => ({
-    ...m.dataValues,
+  const mapped = menus.map(m => ({
+    ...m,
     image: m.image ? `${baseUrl}/${m.image}` : null,
   }));
 
-  res.json(formatted);
-});
+  res.json(mapped);
+};
 
-// GET BY ID
-export const getMenuById = asyncHandler(async (req, res) => {
-  const baseUrl = `${req.protocol}://${req.get("host")}`;
+const getAll = async (req, res) => {
+  const menus = await getAllMenus();
+  res.json(menus);
+};
 
-  const menu = await Menu.findByPk(req.params.id, {
-    include: { model: Restaurant, as: "restaurant" },
-  });
-
-  if (!menu) return res.status(404).json({ msg: "Menu not found" });
-
-  res.json({
-    ...menu.dataValues,
-    image: menu.image ? `${baseUrl}/${menu.image}` : null,
-  });
-});
-
-// UPDATE
-export const updateMenu = asyncHandler(async (req, res) => {
-  const menu = await Menu.findByPk(req.params.id);
-  if (!menu) return res.status(404).json({ msg: "Menu not found" });
-
-  await menu.update(req.body);
+const getById = async (req, res) => {
+  const menu = await getMenuById(req.params.id);
+  if (!menu) {
+    return res.status(404).json({ message: "Menu not found" });
+  }
   res.json(menu);
-});
+};
 
-// DELETE
-export const deleteMenu = asyncHandler(async (req, res) => {
-  const menu = await Menu.findByPk(req.params.id);
-  if (!menu) return res.status(404).json({ msg: "Menu not found" });
+const create = async (req, res) => {
+  const id = await createMenu(req.body);
+  res.status(201).json({ success: true, id });
+};
 
-  await menu.destroy();
-  res.json({ msg: "Deleted" });
-});
+const update = async (req, res) => {
+  await updateMenu(req.params.id, req.body);
+  res.json({ success: true, message: "Updated" });
+};
 
-// ⭐ GET MENUS BY RESTAURANT ID
-export const getMenusByRestaurantId = asyncHandler(async (req, res) => {
-  const baseUrl = `${req.protocol}://${req.get("host")}`;
+const remove = async (req, res) => {
+  await deleteMenu(req.params.id);
+  res.json({ success: true, message: "Deleted" });
+};
 
-  const menus = await Menu.findAll({
-    where: { restaurantId: req.params.id },
-  });
-
-  const formatted = menus.map(m => ({
-    ...m.dataValues,
-    image: m.image ? `${baseUrl}/${m.image}` : null,
-  }));
-
-  res.json(formatted);
-});
+export default {
+  getMenusByRestaurantId,
+  getAll,
+  getById,
+  create,
+  update,
+  remove,
+};

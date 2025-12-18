@@ -18,6 +18,23 @@ export default function ChatBot() {
     "Aku lagi laper, menu apa yang cocok buat mood-ku hari ini?",
   ];
 
+  const SuggestionChips = ({ onClick }) => (
+  <div className="flex gap-2 overflow-x-auto hide-scrollbar mb-3">
+    {suggestions.map((text, i) => (
+      <button
+        key={i}
+        onClick={() => onClick(text)}
+        className="bg-[#fff8ee] text-green-800 border border-green-200 
+        px-4 py-2 rounded-full whitespace-nowrap text-sm
+        hover:bg-green-200 transition active:scale-95"
+      >
+        {text}
+      </button>
+    ))}
+  </div>
+);
+
+
   const sendMessage = async (text) => {
     if (!text.trim()) return;
 
@@ -66,7 +83,7 @@ export default function ChatBot() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <IoArrowBack
-              onClick={() => navigate("/culinary")}
+              onClick={() => navigate("/")}
               className="text-2xl cursor-pointer text-green-700 hover:text-green-900 transition"
             />
             <img src={mascot} alt="Cak Suroyo" className="w-10 h-10" />
@@ -106,9 +123,8 @@ export default function ChatBot() {
       {/* CHAT AREA */}
       <div
         ref={chatRef}
-        className={`flex-1 overflow-y-auto ${
-          messages.length === 0 ? "pt-52" : "pt-28 pb-48"
-        }`}
+        className={`flex-1 overflow-y-auto ${messages.length === 0 ? "pt-52" : "pt-28 pb-48"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
 
@@ -121,19 +137,10 @@ export default function ChatBot() {
               </h2>
 
               <div className="max-w-2xl w-full">
-                <div className="flex gap-3 overflow-x-auto hide-scrollbar mt-12 mb-8">
-                  {suggestions.map((prompt, i) => (
-                    <button
-                      key={i}
-                      onClick={() => sendMessage(prompt)}
-                      className="bg-[#fff8ee] text-green-800 border border-green-200 
-                      px-5 py-3 rounded-xl whitespace-nowrap hover:bg-green-200 
-                      transition shadow-sm active:scale-95 text-sm"
-                    >
-                      {prompt}
-                    </button>
-                  ))}
-                </div>
+                <div className="mt-12 mb-8">
+  <SuggestionChips onClick={sendMessage} />
+</div>
+
 
                 <div className="flex items-center gap-3 bg-white border rounded-full px-6 py-4 shadow-lg">
                   <input
@@ -161,16 +168,14 @@ export default function ChatBot() {
               {messages.map((msg, index) => (
                 <div
                   key={index}
-                  className={`my-4 flex ${
-                    msg.sender === "user" ? "justify-end" : "justify-start"
-                  }`}
+                  className={`my-4 flex ${msg.sender === "user" ? "justify-end" : "justify-start"
+                    }`}
                 >
                   <div
-                    className={`px-5 py-3 rounded-2xl max-w-md shadow text-sm ${
-                      msg.sender === "user"
+                    className={`px-5 py-3 rounded-2xl max-w-md shadow text-sm ${msg.sender === "user"
                         ? "bg-green-700 text-white rounded-br-none"
                         : "bg-[#fff8ee] text-gray-800 rounded-bl-none"
-                    }`}
+                      }`}
                   >
                     {msg.text}
                   </div>
@@ -194,9 +199,16 @@ export default function ChatBot() {
       </div>
 
       {/* CHAT INPUT */}
+      {/* CHAT INPUT */}
       {messages.length > 0 && (
-        <div className="fixed bottom-0 left-0 w-full bg-white shadow-2xl z-40">
+        <div className="fixed bottom-0 left-0 w-full shadow-2xl z-4">
           <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
+
+            {/* SUGGESTION PROMPTS */}
+            <SuggestionChips onClick={sendMessage} />
+
+
+            {/* INPUT BOX */}
             <div className="flex items-center gap-3 bg-white border rounded-full px-6 py-3 shadow">
               <input
                 type="text"
@@ -204,11 +216,11 @@ export default function ChatBot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-                className="flex-1 outline-none"
+                className="flex-1 outline-none text-lg"
               />
               <button
                 onClick={() => sendMessage(input)}
-                className="bg-green-700 p-3 rounded-full text-white"
+                className="bg-green-700 p-4 rounded-full text-white text-xl"
               >
                 <IoSend />
               </button>
@@ -216,6 +228,7 @@ export default function ChatBot() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

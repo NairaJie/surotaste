@@ -22,7 +22,7 @@ export default function MenuModal({ open, item, onClose }) {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-48 h-48 rounded-xl overflow-hidden">
             <img
-              src={item.img}
+              src={item.image}
               className="w-full h-full object-cover"
               alt={item.name || item.title}
             />

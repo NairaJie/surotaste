@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import foodimg from "../assets/Mealplan-Food.png";
+import restoimg from "../assets/Mealplan-Resto.png";
 
 export default function MealplanResult() {
     const navigate = useNavigate();
@@ -46,7 +48,7 @@ export default function MealplanResult() {
                 <div className="flex gap-6">
                     {/* Image */}
                     <img
-                        src="https://images.unsplash.com/photo-1606756790138-57c5a5c57fcd"
+                        src={restoimg}
                         className="w-72 h-48 object-cover rounded-3xl"
                         alt=""
                     />
@@ -95,7 +97,7 @@ export default function MealplanResult() {
                         >
                             <div className="flex items-center gap-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1606756790138-57c5a5c57fcd"
+                                    src={foodimg}
                                     className="w-14 h-14 rounded-xl object-cover"
                                     alt=""
                                 />

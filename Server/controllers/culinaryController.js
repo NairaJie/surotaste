@@ -1,16 +1,16 @@
-import { Culinary, Food, Restaurant } from "../models/index.js";
-import asyncHandler from "../middleware/asyncHandler.js";
+import {
+  getAllCulinary,
+  getCulinaryById,
+  getByFoodId,
+  getCulinaryByRestaurant,
+  createCulinary,
+  updateCulinary,
+  deleteCulinary,
+} from "../repositories/culinaryRepo.js";
 
 // GET ALL
-// GET ALL
-export const getAllCulinary = asyncHandler(async (req, res) => {
-  const data = await Culinary.findAll({
-    include: [
-      { model: Food, as: "food" },
-      { model: Restaurant, as: "restaurant" }
-    ]
-  });
-
+const getAll = async (req, res) => {
+  const data = await getAllCulinary();
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
   const mapped = data.map(item => ({
@@ -20,66 +20,79 @@ export const getAllCulinary = asyncHandler(async (req, res) => {
     taste: item.taste,
     category: item.category,
 
-    // ⬅️ buat image jadi URL lengkap
     image: item.image ? `${baseUrl}/${item.image}` : null,
 
-    foodId: item.foodId,
-    restaurantId: item.restaurantId,
+    food: {
+      name: item.food_name,
+      category: item.food_category
+    },
 
-    // ⬅️ kamu ingin restaurant_name
-    restaurant_name: item.restaurant?.name || null,
-
-    // full nested data tetap ada kalau kamu mau pakai
-    food: item.food,
     restaurant: {
-      ...item.restaurant?.dataValues,
-      image: item.restaurant?.image
-        ? `${baseUrl}/${item.restaurant.image}`
+      id: item.restaurant_id,
+      name: item.restaurant_name,
+      image: item.restaurant_image
+        ? `${baseUrl}/restaurants/${item.restaurant_image}`
         : null
     }
   }));
 
   res.json(mapped);
-});
-
+};
 
 // GET BY ID
-export const getCulinaryById = asyncHandler(async (req, res) => {
-  const item = await Culinary.findByPk(req.params.id, {
-    include: [
-      { model: Food, as: "food" },
-      { model: Restaurant, as: "restaurant" }
-    ]
-  });
-
-  if (!item) return res.status(404).json({ msg: "Not found" });
+const getById = async (req, res) => {
+  const item = await getCulinaryById(req.params.id);
+  if (!item) {
+    return res.status(404).json({ message: "Culinary not found" });
+  }
   res.json(item);
-});
+};
 
-// GET BY FOOD ID
-export const getByFoodId = asyncHandler(async (req, res) => {
-  const items = await Culinary.findAll({
-    where: { foodId: req.params.foodId },
-    include: [{ model: Restaurant, as: "restaurant" }]
-  });
+// GET BY FOOD
+const getByFood = async (req, res) => {
+  const data = await getByFoodId(req.params.foodId);
+  res.json(data);
+};
 
-  res.json(items);
-});
+// GET BY RESTAURANT (route lama tetap hidup)
+const getByRestaurantId = async (req, res) => {
+  const data = await getCulinaryByRestaurant(req.params.id);
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+
+  const mapped = data.map(item => ({
+    ...item,
+    image: item.image
+      ? `${baseUrl}/culinary/${item.image}`
+      : null,
+  }));
+
+  res.json(mapped);
+};
 
 // CREATE
-export const createCulinary = asyncHandler(async (req, res) => {
-  const newItem = await Culinary.create(req.body);
-  res.status(201).json(newItem);
-});
+const create = async (req, res) => {
+  const id = await createCulinary(req.body);
+  res.status(201).json({ success: true, id });
+};
 
 // UPDATE
-export const updateCulinary = asyncHandler(async (req, res) => {
-  await Culinary.update(req.body, { where: { id: req.params.id } });
-  res.json({ msg: "Updated" });
-});
+const update = async (req, res) => {
+  await updateCulinary(req.params.id, req.body);
+  res.json({ success: true });
+};
 
 // DELETE
-export const deleteCulinary = asyncHandler(async (req, res) => {
-  await Culinary.destroy({ where: { id: req.params.id } });
-  res.json({ msg: "Deleted" });
-});
+const remove = async (req, res) => {
+  await deleteCulinary(req.params.id);
+  res.json({ success: true });
+};
+
+export default {
+  getAll,
+  getById,
+  getByFood,
+  getByRestaurantId,
+  create,
+  update,
+  remove,
+};

@@ -1,27 +1,23 @@
 import express from "express";
-import {
-  getAllCulinary,
-  getCulinaryById,
-  getByFoodId,
-  createCulinary,
-  updateCulinary,
-  deleteCulinary
-} from "../controllers/culinaryController.js";
+import culinaryController from "../controllers/culinaryController.js";
 
 const router = express.Router();
 
 // GET ALL
-router.get("/", getAllCulinary);
+router.get("/", culinaryController.getAll);
 
-// GET by Food ID — MUST COME FIRST
-router.get("/food/:foodId", getByFoodId);
+// GET by Food ID
+router.get("/food/:foodId", culinaryController.getByFood);
 
-// GET by Culinary ID
-router.get("/:id", getCulinaryById);
+// GET by Restaurant ID (route lama, TETEP ADA)
+router.get("/restaurant/:id", culinaryController.getByRestaurantId);
+
+// GET by Culinary ID (PALING BAWAH)
+router.get("/:id", culinaryController.getById);
 
 // CRUD
-router.post("/", createCulinary);
-router.put("/:id", updateCulinary);
-router.delete("/:id", deleteCulinary);
+router.post("/", culinaryController.create);
+router.put("/:id", culinaryController.update);
+router.delete("/:id", culinaryController.remove);
 
 export default router;

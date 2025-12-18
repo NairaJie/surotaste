@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../setup/sequelize.js";
+
 
 const Review = sequelize.define("Review", {
   rating: { type: DataTypes.FLOAT, allowNull: false },

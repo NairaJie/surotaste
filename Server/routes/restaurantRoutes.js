@@ -1,22 +1,15 @@
 import express from "express";
 import asyncHandler from "../middleware/asyncHandler.js";
-import Menu from "../models/menu.js";           // ⭐ WAJIB DITAMBAHKAN
-import {
-  createRestaurant,
-  getRestaurants,
-  getRestaurantByName,
-  getRestaurantById,
-  updateRestaurant,
-  deleteRestaurant,
-} from "../controllers/restaurantController.js";
+import Menu from "../models/menu.js"; // TETEP
+import restaurantController from "../controllers/restaurantController.js";
 
 const router = express.Router();
 
-router.post("/", createRestaurant);
-router.get("/", getRestaurants);
-router.get("/name/:name", getRestaurantByName);
+router.post("/", asyncHandler(restaurantController.create));
+router.get("/", asyncHandler(restaurantController.getRestaurants));
+router.get("/name/:name", asyncHandler(restaurantController.getByName));
 
-// ⭐ Route menus harus sebelum `/:id`
+// ⭐ route menus TETEP & POSISI TETEP
 router.get("/:id/menus", asyncHandler(async (req, res) => {
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
@@ -32,8 +25,8 @@ router.get("/:id/menus", asyncHandler(async (req, res) => {
   res.json(mapped);
 }));
 
-router.get("/:id", getRestaurantById);
-router.put("/:id", updateRestaurant);
-router.delete("/:id", deleteRestaurant);
+router.get("/:id", asyncHandler(restaurantController.getRestaurantDetail));
+router.put("/:id", asyncHandler(restaurantController.update));
+router.delete("/:id", asyncHandler(restaurantController.remove));
 
 export default router;

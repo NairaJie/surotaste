@@ -1,30 +1,26 @@
-import Review from "../models/review.js";
-import asyncHandler from "../middleware/asyncHandler.js";
+import {
+  getReviewsByRestaurant,
+  getAllReviews,
+  createReview,
+} from "../repositories/reviewRepo.js";
 
-export const createReview = asyncHandler(async (req, res) => {
-  const review = await Review.create(req.body);
-  res.status(201).json(review);
-});
-
-export const getAllReviews = asyncHandler(async (req, res) => {
-  const reviews = await Review.findAll({
-    include: [
-      { association: "reviewUser", attributes: ["id", "name", "photoURL"] },
-      { association: "restaurantReview" }
-    ]
-  });
-
+const getByRestaurant = async (req, res) => {
+  const reviews = await getReviewsByRestaurant(req.params.id);
   res.json(reviews);
-});
+};
 
-export const getReviewsByRestaurant = asyncHandler(async (req, res) => {
-  const reviews = await Review.findAll({
-    where: { restaurantId: req.params.id },
-    include: [
-      { association: "reviewUser", attributes: ["id", "name", "photoURL"] },
-      { association: "restaurantReview" }
-    ]
-  });
-
+const getAll = async (req, res) => {
+  const reviews = await getAllReviews();
   res.json(reviews);
-});
+};
+
+const create = async (req, res) => {
+  await createReview(req.body);
+  res.status(201).json({ success: true });
+};
+
+export default {
+  getByRestaurant,
+  getAll,
+  create,
+};

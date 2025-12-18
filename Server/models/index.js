@@ -1,4 +1,4 @@
-import sequelize from "../config/db.js"; // Tambahkan ini
+import sequelize from "../setup/sequelize.js"; // Tambahkan inin
 import User from "./user.js";
 import Restaurant from "./restaurant.js";
 import Food from "./food.js";

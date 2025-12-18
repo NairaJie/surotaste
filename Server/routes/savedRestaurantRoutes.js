@@ -1,53 +1,33 @@
 import express from "express";
 import asyncHandler from "../middleware/asyncHandler.js";
-import SavedRestaurant from "../models/savedRestaurant.js";
-import Restaurant from "../models/restaurant.js";
-
-import {
-    saveRestaurant,
-    unsaveRestaurant,
-    getUserSavedRestaurants,
-    checkSavedStatus,
-} from "../controllers/savedRestaurantController.js";
+import savedRestaurantController from "../controllers/savedRestaurantController.js";
 
 const router = express.Router();
 
 // Save restaurant
-router.post("/", saveRestaurant);
+router.post("/", asyncHandler(savedRestaurantController.saveRestaurant));
 
 // Unsave restaurant
-router.delete("/:userId/:restaurantId", unsaveRestaurant);
-
+router.delete(
+  "/:userId/:restaurantId",
+  asyncHandler(savedRestaurantController.unsaveRestaurant)
+);
 
 // Get saved items (FULL DATA)
-router.get("/:userId", asyncHandler(async (req, res) => {
-    const items = await SavedRestaurant.findAll({
-        where: { userId: req.params.userId },
-        include: [
-            {
-                model: Restaurant,
-                as: "restaurant",
-            }
-        ]
-    });
-
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
-
-    const mapped = items.map(s => ({
-        id: s.id, // ID savedRestaurant
-        restaurantId: s.restaurant.id,
-        name: s.restaurant.name,
-        image: `${baseUrl}/${s.restaurant.image}`,
-        rating: s.restaurant.rating,
-        region: s.restaurant.region,
-        restaurantId: s.restaurant.id,
-    }));
-
-    res.json(mapped);
-}));
+router.get(
+  "/:userId",
+  asyncHandler(savedRestaurantController.getUserSavedRestaurants)
+);
 
 // Other routes
-router.get("/user/:userId", getUserSavedRestaurants);
-router.get("/check/:userId/:restaurantId", checkSavedStatus);
+router.get(
+  "/user/:userId",
+  asyncHandler(savedRestaurantController.getUserSavedRestaurants)
+);
+
+router.get(
+  "/check/:userId/:restaurantId",
+  asyncHandler(savedRestaurantController.checkSavedStatus)
+);
 
 export default router;
