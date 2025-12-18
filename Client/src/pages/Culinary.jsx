@@ -63,11 +63,11 @@ const Culinary = () => {
       <RestaurantCard/>
       
       {/* FLOATING CHAT */}
-      <div className="fixed bottom-24 right-36 bg-green-700 text-white px-4 py-2 rounded-2xl font-semibold shadow-lg">
+      <div className="fixed bottom-24 right-28 bg-green-700 text-white px-4 py-2 rounded-2xl font-semibold shadow-lg">
         Tanya aja!
       </div>
       <div
-        className="fixed bottom-6 right-6 bg-white rounded-full w-20 h-20 shadow-lg flex items-center justify-center cursor-pointer animate-bounce"
+        className="fixed bottom-12 right-6 bg-white rounded-full w-20 h-20 shadow-lg flex items-center justify-center cursor-pointer animate-bounce"
         onClick={() => navigate("/chatbot")}
       >
         <img src={mascot} alt="Chat Mascot" className="w-16 h-16 rounded-full" />
