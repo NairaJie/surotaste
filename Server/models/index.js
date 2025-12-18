@@ -1,8 +1,8 @@
-import sequelize from "../setup/sequelize.js"; // Tambahkan inin
+import sequelize from "../setup/sequelize.js";
 import User from "./user.js";
-import Restaurant from "./Restaurant.js";
+import Restaurant from "./restaurant.js"; // Ubah dari Restaurant.js ke restaurant.js
 import Food from "./food.js";
-import Menu from './Menu.js';
+import Menu from './menu.js';             // Ubah dari Menu.js ke menu.js
 import Culinary from "./culinary.js";
 import Review from "./review.js";
 import SavedRestaurant from "./savedRestaurant.js";
