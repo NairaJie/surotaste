@@ -44,7 +44,7 @@ export default function DetailFood() {
 
     // 1) Fetch food by name
     useEffect(() => {
-        fetch(`http://localhost:5050/api/foods/name/${name}`)
+        fetch(`https://api-surotaste.infinitelearningstudent.id/food/name/${name}`)
             .then(res => {
                 if (!res.ok) throw new Error("Food not found");
                 return res.json();
@@ -57,7 +57,7 @@ export default function DetailFood() {
     useEffect(() => {
         if (!food) return;
 
-        fetch(`http://localhost:5050/api/culinary/food/${food.id}`)
+        fetch(`https://api-surotaste.infinitelearningstudent.id/api/culinary/food/${food.id}`)
             .then(res => res.json())
             .then(data => setCulinaryList(data))
             .catch(err => console.log(err));

@@ -27,7 +27,7 @@ export default function Navbar() {
             <img
               src={
                 user?.image
-                  ? `http://localhost:5050${user.image}`
+                  ? `https://api-surotaste.infinitelearningstudent.id${user.image}`
                   : user?.picture || ProfilePhoto
               }
 

@@ -16,7 +16,7 @@ export default function Review() {
 
   // 👉 Fetch restaurants
   useEffect(() => {
-  fetch("http://localhost:5050/api/restaurants")
+  fetch("https://api-surotaste.infinitelearningstudent.id/api/restaurants")
     .then((res) => res.json())
     .then((data) => {
       console.log("Restaurant data:", data); // biar kamu lihat responsnya
@@ -34,7 +34,7 @@ export default function Review() {
     }
 
     try {
-      const res = await fetch("http://localhost:5050/api/reviews", {
+      const res = await fetch("https://api-surotaste.infinitelearningstudent.id/api/reviews", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

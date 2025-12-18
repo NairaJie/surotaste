@@ -20,7 +20,7 @@ const CulinaryCard = () => {
 
   // Fetch data
   useEffect(() => {
-    fetch("http://localhost:5050/api/culinary")
+    fetch("https://api-surotaste.infinitelearningstudent.id/api/culinary")
       .then((res) => res.json())
       .then((data) => {
         setAllFoods(data || []);

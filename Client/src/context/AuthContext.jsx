@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    fetch("http://localhost:5050/api/auth/me", {
+    fetch("https://api-surotaste.infinitelearningstudent.id/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((res) => res.json())
@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const register = async (name, email, password) => {
-    const res = await fetch("http://localhost:5050/api/auth/register", {
+    const res = await fetch("https://api-surotaste.infinitelearningstudent.id/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password })
@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => {
-    const res = await fetch("http://localhost:5050/api/auth/login", {
+    const res = await fetch("https://api-surotaste.infinitelearningstudent.id/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })

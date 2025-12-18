@@ -19,7 +19,7 @@ const Culinary = () => {
 
   // Fetch restaurant data
   useEffect(() => {
-    fetch("http://localhost:5050/api/restaurants")
+    fetch("hhttps://api-surotaste.infinitelearningstudent.id/api/restaurants")
       .then((res) => res.json())
       .then((data) => setRestaurants(data))
       .catch((err) => console.log(err));

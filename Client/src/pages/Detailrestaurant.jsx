@@ -57,8 +57,8 @@ export default function DetailRestaurant() {
     }
 
     const url = saved
-      ? `http://localhost:5050/api/saved/${user.id}/${restaurant.id}`
-      : "http://localhost:5050/api/saved";
+      ? `https://api-surotaste.infinitelearningstudent.id/api/saved/${user.id}/${restaurant.id}`
+      : "https://api-surotaste.infinitelearningstudent.id/api/saved";
 
     const method = saved ? "DELETE" : "POST";
 
@@ -90,7 +90,7 @@ export default function DetailRestaurant() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5050/api/restaurants/${id}`)
+    fetch(`https://api-surotaste.infinitelearningstudent.id/api/restaurants/${id}`)
       .then((res) => res.json())
       .then((data) => setRestaurant(data))
       .catch((err) => console.error(err));
@@ -99,7 +99,7 @@ export default function DetailRestaurant() {
   useEffect(() => {
     if (!restaurant) return;
 
-    fetch(`http://localhost:5050/api/restaurants/${restaurant.id}/menus`)
+    fetch(`https://api-surotaste.infinitelearningstudent.id/api/restaurants/${restaurant.id}/menus`)
       .then(res => res.json())
       .then(data => setMenus(data))
       .catch(err => console.error("Error load menus:", err));
@@ -109,7 +109,7 @@ export default function DetailRestaurant() {
   useEffect(() => {
     if (!user || !restaurant) return;
 
-    fetch(`http://localhost:5050/api/saved/check/${user.id}/${restaurant.id}`)
+    fetch(`https://api-surotaste.infinitelearningstudent.id/api/saved/check/${user.id}/${restaurant.id}`)
       .then(res => res.json())
       .then(data => setSaved(data.saved));
   }, [user, restaurant]);

@@ -32,7 +32,7 @@ export default function SignUp() {
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:5050/api/auth/google";
+    window.location.href = "https://api-surotaste.infinitelearningstudent.id/api/auth/google";
   };
 
   return (

@@ -14,7 +14,7 @@ export default function SavedRestaurants() {
     useEffect(() => {
         if (!user) return;
 
-        fetch(`http://localhost:5050/api/saved/${user.id}`)
+        fetch(`https://api-surotaste.infinitelearningstudent.id/api/saved/${user.id}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log("🔥 Saved restaurants from backend:", data);

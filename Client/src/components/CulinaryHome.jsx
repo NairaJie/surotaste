@@ -9,7 +9,7 @@ export default function CulinaryHome() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://api-surotaste.infinitelearningstudent.id/api/culinary")
+    fetch("x")
       .then((res) => res.json())
       .then((data) => {
         setFoods(data.slice(0, 4)); // ⬅️ tampilkan hanya 4 item

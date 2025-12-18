@@ -20,7 +20,7 @@ const RestaurantCard = () => {
   // FETCH DATA API
   // ================================
   useEffect(() => {
-    fetch("http://localhost:5050/api/restaurants")
+    fetch("https://api-surotaste.infinitelearningstudent.id/api/restaurants")
       .then((res) => res.json())
       .then((data) => {
         setAllRestaurants(data);

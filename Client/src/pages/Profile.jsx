@@ -19,7 +19,7 @@ export default function Profile() {
     if (!token) return;
 
     axios
-      .get("http://localhost:5050/api/auth/me", {
+      .get("https://api-surotaste.infinitelearningstudent.id/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -36,7 +36,7 @@ export default function Profile() {
   const handleSave = async () => {
     try {
       const res = await axios.put(
-        "http://localhost:5050/api/auth/update",
+        "https://api-surotaste.infinitelearningstudent.id/api/auth/update",
         { name: user.name },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -63,7 +63,7 @@ export default function Profile() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5050/api/auth/upload-photo",
+        "https://api-surotaste.infinitelearningstudent.id/api/auth/upload-photo",
         formData,
         {
           headers: {
@@ -108,7 +108,7 @@ export default function Profile() {
         {/* Avatar */}
         <div className="relative group">
           <img
-            src={user.image ? `http://localhost:5050${user.image}` : "/profile.png"}
+            src={user.image ? `https://api-surotaste.infinitelearningstudent.id${user.image}` : "/profile.png"}
             alt="Profile"
             className="w-56 h-56 object-cover rounded-full"
           />

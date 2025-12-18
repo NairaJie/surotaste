@@ -8,7 +8,7 @@ export default function RestaurantHome() {
      const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:5050/api/restaurants")
+        fetch("https://api-surotaste.infinitelearningstudent.id/api/restaurants")
             .then((res) => res.json())
             .then((data) => {
                 // Tampilkan hanya 8
