@@ -118,9 +118,6 @@ export default function DetailRestaurant() {
   if (!restaurant) return <div className="p-6">Loading...</div>;
 
 
-
-
-
   return (
     <div className="antialiased text-gray-800 bg-white">
 

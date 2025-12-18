@@ -36,32 +36,50 @@ const foodImages = {
 };
 
 export default function DetailFood() {
-    const { name } = useParams();
+
     const navigate = useNavigate();
 
+
+    const { name } = useParams();
     const [food, setFood] = useState(null);
     const [culinaryList, setCulinaryList] = useState([]);
 
-    // 1) Fetch food by name
     useEffect(() => {
-        fetch(`https://api-surotaste.infinitelearningstudent.id/food/name/${name}`)
-            .then(res => {
+        const fetchFood = async () => {
+            try {
+                const res = await fetch(
+                    `https://api-surotaste.infinitelearningstudent.id/api/foods/name/${encodeURIComponent(name)}`
+                );
                 if (!res.ok) throw new Error("Food not found");
-                return res.json();
-            })
-            .then(data => setFood(data))
-            .catch(err => console.log(err));
+                const data = await res.json();
+                setFood(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchFood();
     }, [name]);
 
-    // 2) Fetch culinary after food loaded (HOOK SELALU DI LUAR CONDITION)
     useEffect(() => {
-        if (!food) return;
+        if (!food?.id) return; // pastikan food.id ada
 
-        fetch(`https://api-surotaste.infinitelearningstudent.id/api/culinary/food/${food.id}`)
-            .then(res => res.json())
-            .then(data => setCulinaryList(data))
-            .catch(err => console.log(err));
+        const fetchCulinary = async () => {
+            try {
+                const res = await fetch(
+                    `https://api-surotaste.infinitelearningstudent.id/api/culinary/food/${food.id}`
+                );
+                const data = await res.json();
+                setCulinaryList(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchCulinary();
     }, [food]);
+
+
 
 
     if (!food) return <div className="p-10">Loading...</div>;
@@ -148,7 +166,7 @@ export default function DetailFood() {
                                     className="bg-[var(--cream)] rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-[#fff5ea] transition-all duration-300 cursor-pointer"
                                 >
                                     <img
-                                        src={`http://localhost:5050/${item.image}`}
+                                        src={`https://api-surotaste.infinitelearningstudent.id/${item.image}`}
                                         alt={item.name}
                                         className="w-full h-56 object-cover"
                                     />
