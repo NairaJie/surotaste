@@ -1,3 +1,5 @@
+import mysql from "mysql2/promise"; // <--- ini wajib
+
 import dotenv from "dotenv";
 dotenv.config();
 
